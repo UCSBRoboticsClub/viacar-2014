@@ -2952,7 +2952,7 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <instance part="JP2" gate="G$1" x="5.08" y="7.62"/>
 <instance part="GND1" gate="1" x="17.78" y="25.4"/>
 <instance part="GND2" gate="1" x="17.78" y="5.08"/>
-<instance part="JP1" gate="G$1" x="5.08" y="33.02" rot="MR180"/>
+<instance part="JP1" gate="G$1" x="5.08" y="33.02"/>
 <instance part="JP3" gate="G$1" x="124.46" y="38.1" rot="MR0"/>
 <instance part="Q1" gate="G$1" x="40.64" y="60.96" rot="MR90"/>
 <instance part="SUPPLY1" gate="G$1" x="25.4" y="63.5"/>
@@ -2984,7 +2984,7 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <segment>
 <pinref part="GND1" gate="1" pin="GND"/>
 <wire x1="12.7" y1="27.94" x2="17.78" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="5"/>
+<pinref part="JP1" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="GNDA@26"/>
@@ -3133,7 +3133,7 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 </net>
 <net name="3.3V" class="0">
 <segment>
-<pinref part="JP1" gate="G$1" pin="1"/>
+<pinref part="JP1" gate="G$1" pin="5"/>
 <wire x1="12.7" y1="38.1" x2="17.78" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="17.78" y1="38.1" x2="17.78" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="SUPPLY3" gate="G$1" pin="3.3V"/>
@@ -3179,7 +3179,7 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 </net>
 <net name="N$7" class="0">
 <segment>
-<pinref part="JP1" gate="G$1" pin="2"/>
+<pinref part="JP1" gate="G$1" pin="4"/>
 <wire x1="12.7" y1="35.56" x2="50.8" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="50.8" y1="35.56" x2="50.8" y2="38.1" width="0.1524" layer="91"/>
 <pinref part="R1" gate="G$1" pin="1"/>
@@ -3188,7 +3188,7 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 </net>
 <net name="N$8" class="0">
 <segment>
-<pinref part="JP1" gate="G$1" pin="4"/>
+<pinref part="JP1" gate="G$1" pin="2"/>
 <wire x1="12.7" y1="30.48" x2="50.8" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="50.8" y1="30.48" x2="50.8" y2="27.94" width="0.1524" layer="91"/>
 <pinref part="R3" gate="G$1" pin="1"/>
