@@ -2375,16 +2375,16 @@ General-purpose diode for high-speed switching</description>
 <part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="L1" library="SparkFun-Passives" deviceset="INDUCTOR" device="RLB0912"/>
-<part name="R1" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="C1" library="SparkFun-Capacitors" deviceset="CAP" device="0805"/>
-<part name="R2" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R3" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
+<part name="L1" library="SparkFun-Passives" deviceset="INDUCTOR" device="RLB0912" value="1mH"/>
+<part name="R1" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="1K"/>
+<part name="C1" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="4.7nF"/>
+<part name="R2" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="68K"/>
+<part name="R3" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="R4" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R5" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R4" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
+<part name="R5" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
 <part name="R6" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
 <part name="C2" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="C3" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="0.22uF"/>
@@ -2396,40 +2396,38 @@ General-purpose diode for high-speed switching</description>
 <part name="Q1" library="Custom" deviceset="BCM847DS" device=""/>
 <part name="U1" library="Custom" deviceset="TL974" device=""/>
 <part name="U2" library="Custom" deviceset="TL974" device=""/>
-<part name="R8" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R8" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="R9" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R11" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R12" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R10" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R9" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="15K"/>
+<part name="R11" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="2K"/>
+<part name="R12" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="499K"/>
+<part name="R10" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="1K"/>
 <part name="GND9" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="R13" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R13" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="499K"/>
 <part name="SUPPLY5" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="C6" library="SparkFun-Capacitors" deviceset="CAP" device="0805"/>
+<part name="C6" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="GND11" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="R14" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R15" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R14" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
+<part name="R15" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="68K"/>
 <part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY6" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="R16" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="R17" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="GND12" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="R18" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
-<part name="D2" library="diode" deviceset="BAS70-04" device=""/>
-<part name="R19" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES"/>
+<part name="R16" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="40.2K"/>
+<part name="R17" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
 <part name="C7" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="0.15uF"/>
 <part name="C8" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="0.15uF"/>
+<part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND12" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
 </plain>
 <instances>
-<instance part="JP1" gate="G$1" x="350.52" y="30.48" rot="R180"/>
-<instance part="SUPPLY1" gate="1" x="342.9" y="35.56"/>
+<instance part="JP1" gate="G$1" x="312.42" y="25.4" rot="MR0"/>
+<instance part="SUPPLY1" gate="1" x="304.8" y="33.02"/>
 <instance part="SUPPLY2" gate="1" x="27.94" y="91.44"/>
-<instance part="GND1" gate="1" x="340.36" y="22.86"/>
+<instance part="GND1" gate="1" x="304.8" y="17.78"/>
 <instance part="GND3" gate="1" x="17.78" y="17.78"/>
 <instance part="L1" gate="G$1" x="17.78" y="33.02"/>
 <instance part="R1" gate="G$1" x="7.62" y="33.02" rot="R270"/>
@@ -2446,7 +2444,7 @@ General-purpose diode for high-speed switching</description>
 <instance part="C3" gate="G$1" x="149.86" y="55.88" rot="R90"/>
 <instance part="GND6" gate="1" x="185.42" y="35.56"/>
 <instance part="R7" gate="G$1" x="132.08" y="48.26"/>
-<instance part="SUPPLY3" gate="G$2" x="335.28" y="15.24"/>
+<instance part="SUPPLY3" gate="G$2" x="299.72" y="10.16"/>
 <instance part="SUPPLY4" gate="G$2" x="27.94" y="63.5"/>
 <instance part="D1" gate="G$1" x="99.06" y="48.26" rot="MR180"/>
 <instance part="Q1" gate="A" x="205.74" y="63.5" rot="R90"/>
@@ -2458,7 +2456,6 @@ General-purpose diode for high-speed switching</description>
 <instance part="U1" gate="D" x="193.04" y="43.18" rot="MR180"/>
 <instance part="U2" gate="A" x="246.38" y="55.88" rot="R180"/>
 <instance part="U2" gate="C" x="274.32" y="25.4" rot="MR180"/>
-<instance part="U2" gate="D" x="309.88" y="22.86" rot="MR180"/>
 <instance part="U2" gate="P" x="60.96" y="78.74"/>
 <instance part="R8" gate="G$1" x="177.8" y="45.72" rot="R180"/>
 <instance part="GND2" gate="1" x="205.74" y="55.88"/>
@@ -2470,20 +2467,20 @@ General-purpose diode for high-speed switching</description>
 <instance part="GND10" gate="1" x="254" y="48.26"/>
 <instance part="R13" gate="G$1" x="276.86" y="66.04" rot="R180"/>
 <instance part="SUPPLY5" gate="1" x="284.48" y="68.58"/>
-<instance part="C6" gate="G$1" x="269.24" y="60.96" rot="R180"/>
-<instance part="GND11" gate="1" x="269.24" y="50.8"/>
+<instance part="C6" gate="G$1" x="269.24" y="58.42" rot="R180"/>
+<instance part="GND11" gate="1" x="269.24" y="48.26"/>
 <instance part="R14" gate="G$1" x="259.08" y="27.94" rot="R180"/>
-<instance part="R15" gate="G$1" x="276.86" y="38.1"/>
+<instance part="R15" gate="G$1" x="276.86" y="38.1" rot="R180"/>
 <instance part="GND13" gate="1" x="266.7" y="0"/>
 <instance part="SUPPLY6" gate="1" x="251.46" y="20.32"/>
 <instance part="R16" gate="G$1" x="259.08" y="17.78" rot="R180"/>
 <instance part="R17" gate="G$1" x="266.7" y="10.16" rot="R90"/>
-<instance part="GND12" gate="1" x="302.26" y="15.24"/>
-<instance part="R18" gate="G$1" x="294.64" y="25.4" rot="R180"/>
-<instance part="D2" gate="G$1" x="322.58" y="33.02" rot="MR180"/>
-<instance part="R19" gate="G$1" x="317.5" y="43.18" rot="R180"/>
 <instance part="C7" gate="G$1" x="45.72" y="81.28" rot="R180"/>
 <instance part="C8" gate="G$1" x="78.74" y="81.28" rot="R180"/>
+<instance part="U2" gate="D" x="106.68" y="91.44"/>
+<instance part="U2" gate="B" x="106.68" y="111.76"/>
+<instance part="GND8" gate="1" x="93.98" y="88.9"/>
+<instance part="GND12" gate="1" x="93.98" y="109.22"/>
 </instances>
 <busses>
 </busses>
@@ -2521,8 +2518,8 @@ General-purpose diode for high-speed switching</description>
 <segment>
 <pinref part="JP1" gate="G$1" pin="1"/>
 <pinref part="GND1" gate="1" pin="GND"/>
-<wire x1="345.44" y1="33.02" x2="340.36" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="340.36" y1="33.02" x2="340.36" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="307.34" y1="22.86" x2="304.8" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="304.8" y1="22.86" x2="304.8" y2="20.32" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R3" gate="G$1" pin="2"/>
@@ -2560,7 +2557,7 @@ General-purpose diode for high-speed switching</description>
 <segment>
 <pinref part="C6" gate="G$1" pin="1"/>
 <pinref part="GND11" gate="1" pin="GND"/>
-<wire x1="269.24" y1="53.34" x2="269.24" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="269.24" y1="50.8" x2="269.24" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="GND9" gate="1" pin="GND"/>
@@ -2575,17 +2572,23 @@ General-purpose diode for high-speed switching</description>
 </segment>
 <segment>
 <pinref part="U2" gate="D" pin="IN+"/>
-<wire x1="304.8" y1="20.32" x2="302.26" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="93.98" x2="93.98" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="93.98" x2="93.98" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="GND8" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="U2" gate="B" pin="IN+"/>
+<wire x1="101.6" y1="114.3" x2="93.98" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="114.3" x2="93.98" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="GND12" gate="1" pin="GND"/>
-<wire x1="302.26" y1="20.32" x2="302.26" y2="17.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VCC" class="0">
 <segment>
 <pinref part="JP1" gate="G$1" pin="4"/>
 <pinref part="SUPPLY1" gate="1" pin="VCC"/>
-<wire x1="345.44" y1="25.4" x2="342.9" y2="25.4" width="0.1524" layer="91"/>
-<wire x1="342.9" y1="25.4" x2="342.9" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="307.34" y1="30.48" x2="304.8" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="304.8" y1="30.48" x2="304.8" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R13" gate="G$1" pin="1"/>
@@ -2645,8 +2648,8 @@ General-purpose diode for high-speed switching</description>
 <net name="VNEG" class="0">
 <segment>
 <pinref part="JP1" gate="G$1" pin="3"/>
-<wire x1="345.44" y1="27.94" x2="335.28" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="335.28" y1="27.94" x2="335.28" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="307.34" y1="27.94" x2="299.72" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="299.72" y1="27.94" x2="299.72" y2="12.7" width="0.1524" layer="91"/>
 <pinref part="SUPPLY3" gate="G$2" pin="VNEG"/>
 </segment>
 <segment>
@@ -2817,7 +2820,7 @@ General-purpose diode for high-speed switching</description>
 <wire x1="271.78" y1="66.04" x2="269.24" y2="66.04" width="0.1524" layer="91"/>
 <pinref part="C6" gate="G$1" pin="2"/>
 <wire x1="269.24" y1="66.04" x2="266.7" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="269.24" y1="63.5" x2="269.24" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="269.24" y1="60.96" x2="269.24" y2="66.04" width="0.1524" layer="91"/>
 <junction x="269.24" y="66.04"/>
 </segment>
 </net>
@@ -2838,7 +2841,7 @@ General-purpose diode for high-speed switching</description>
 <pinref part="R14" gate="G$1" pin="1"/>
 <pinref part="U2" gate="C" pin="IN-"/>
 <wire x1="264.16" y1="27.94" x2="266.7" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="R15" gate="G$1" pin="1"/>
+<pinref part="R15" gate="G$1" pin="2"/>
 <wire x1="266.7" y1="27.94" x2="269.24" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="271.78" y1="38.1" x2="266.7" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="266.7" y1="38.1" x2="266.7" y2="27.94" width="0.1524" layer="91"/>
@@ -2849,48 +2852,34 @@ General-purpose diode for high-speed switching</description>
 <segment>
 <pinref part="U2" gate="C" pin="OUT"/>
 <wire x1="284.48" y1="25.4" x2="287.02" y2="25.4" width="0.1524" layer="91"/>
-<pinref part="R15" gate="G$1" pin="2"/>
+<pinref part="R15" gate="G$1" pin="1"/>
 <wire x1="287.02" y1="25.4" x2="287.02" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="287.02" y1="38.1" x2="281.94" y2="38.1" width="0.1524" layer="91"/>
-<pinref part="R18" gate="G$1" pin="2"/>
-<wire x1="289.56" y1="25.4" x2="287.02" y2="25.4" width="0.1524" layer="91"/>
+<pinref part="JP1" gate="G$1" pin="2"/>
+<wire x1="287.02" y1="25.4" x2="307.34" y2="25.4" width="0.1524" layer="91"/>
 <junction x="287.02" y="25.4"/>
 </segment>
 </net>
-<net name="N$23" class="0">
+<net name="N$9" class="0">
 <segment>
-<pinref part="R18" gate="G$1" pin="1"/>
+<pinref part="U2" gate="B" pin="OUT"/>
+<wire x1="116.84" y1="111.76" x2="119.38" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="111.76" x2="119.38" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="104.14" x2="99.06" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="99.06" y1="104.14" x2="99.06" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="U2" gate="B" pin="IN-"/>
+<wire x1="99.06" y1="109.22" x2="101.6" y2="109.22" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$11" class="0">
+<segment>
 <pinref part="U2" gate="D" pin="IN-"/>
-<wire x1="304.8" y1="25.4" x2="302.26" y2="25.4" width="0.1524" layer="91"/>
-<pinref part="R19" gate="G$1" pin="2"/>
-<wire x1="302.26" y1="25.4" x2="299.72" y2="25.4" width="0.1524" layer="91"/>
-<wire x1="312.42" y1="43.18" x2="302.26" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="302.26" y1="43.18" x2="302.26" y2="33.02" width="0.1524" layer="91"/>
-<junction x="302.26" y="25.4"/>
-<pinref part="D2" gate="G$1" pin="A1"/>
-<wire x1="302.26" y1="33.02" x2="302.26" y2="25.4" width="0.1524" layer="91"/>
-<wire x1="317.5" y1="33.02" x2="302.26" y2="33.02" width="0.1524" layer="91"/>
-<junction x="302.26" y="33.02"/>
-</segment>
-</net>
-<net name="N$25" class="0">
-<segment>
+<wire x1="101.6" y1="88.9" x2="99.06" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="99.06" y1="88.9" x2="99.06" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="99.06" y1="83.82" x2="119.38" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="83.82" x2="119.38" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="U2" gate="D" pin="OUT"/>
-<pinref part="D2" gate="G$1" pin="C1A2"/>
-<wire x1="320.04" y1="22.86" x2="322.58" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="322.58" y1="22.86" x2="322.58" y2="30.48" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$26" class="0">
-<segment>
-<pinref part="D2" gate="G$1" pin="C2"/>
-<pinref part="JP1" gate="G$1" pin="2"/>
-<wire x1="327.66" y1="33.02" x2="332.74" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="R19" gate="G$1" pin="1"/>
-<wire x1="332.74" y1="33.02" x2="345.44" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="322.58" y1="43.18" x2="332.74" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="332.74" y1="43.18" x2="332.74" y2="33.02" width="0.1524" layer="91"/>
-<junction x="332.74" y="33.02"/>
+<wire x1="119.38" y1="91.44" x2="116.84" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
