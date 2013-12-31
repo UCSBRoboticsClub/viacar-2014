@@ -1580,10 +1580,10 @@ Please make sure your boards conform to these design rules.</description>
 <element name="L1" library="SparkFun-Passives" package="RLB0912" value="1mH" x="12.7" y="54.61" rot="R270"/>
 <element name="R1" library="SparkFun-Resistors" package="0805" value="1K" x="20.32" y="54.61" rot="R90"/>
 <element name="C1" library="SparkFun-Capacitors" package="0805" value="4.7nF" x="5.08" y="54.61" rot="R90"/>
-<element name="R2" library="SparkFun-Resistors" package="0805" value="68K" x="19.05" y="45.72" rot="R90"/>
-<element name="R3" library="SparkFun-Resistors" package="0805" value="10K" x="15.24" y="45.72" rot="R90"/>
-<element name="R4" library="SparkFun-Resistors" package="0805" value="10K" x="11.43" y="45.72" rot="R90"/>
-<element name="R5" library="SparkFun-Resistors" package="0805" value="10K" x="7.62" y="45.72" rot="R90"/>
+<element name="R2" library="SparkFun-Resistors" package="0805" value="15K" x="19.05" y="45.72" rot="R90"/>
+<element name="R3" library="SparkFun-Resistors" package="0805" value="1K" x="15.24" y="45.72" rot="R90"/>
+<element name="R4" library="SparkFun-Resistors" package="0805" value="1K" x="11.43" y="45.72" rot="R90"/>
+<element name="R5" library="SparkFun-Resistors" package="0805" value="15K" x="7.62" y="45.72" rot="R90"/>
 <element name="R6" library="SparkFun-Resistors" package="0805" value="10K" x="3.81" y="41.91"/>
 <element name="C2" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="3.81" y="30.48" rot="R90"/>
 <element name="C3" library="SparkFun-Capacitors" package="0805" value="0.22uF" x="3.81" y="38.1"/>
@@ -1619,11 +1619,11 @@ Please make sure your boards conform to these design rules.</description>
 <element name="C8" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="19.05" y="15.875" rot="R90"/>
 <element name="C5" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="19.05" y="40.005" rot="R90"/>
 <element name="C6" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="19.05" y="36.195" rot="R90"/>
-<element name="C9" library="resistor" package="E2-4" value="" x="20.32" y="24.13" smashed="yes" rot="R90">
+<element name="C9" library="resistor" package="E2-4" value="10uF" x="20.32" y="24.13" smashed="yes" rot="R90">
 <attribute name="NAME" x="18.161" y="22.479" size="0.6096" layer="25" rot="R90"/>
 <attribute name="VALUE" x="22.479" y="26.289" size="1.27" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="C10" library="resistor" package="E2-4" value="" x="20.32" y="11.43" smashed="yes" rot="R90">
+<element name="C10" library="resistor" package="E2-4" value="10uF" x="20.32" y="11.43" smashed="yes" rot="R90">
 <attribute name="NAME" x="18.161" y="9.779" size="0.6096" layer="25" rot="R90"/>
 <attribute name="VALUE" x="22.479" y="13.589" size="1.27" layer="27" ratio="10" rot="R90"/>
 </element>
