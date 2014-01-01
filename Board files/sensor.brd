@@ -109,10 +109,10 @@
 <wire x1="25.3875" y1="0" x2="25.3875" y2="59.68" width="0" layer="20"/>
 <wire x1="25.3875" y1="59.68" x2="0" y2="59.68" width="0" layer="20"/>
 <wire x1="0" y1="59.68" x2="0" y2="0" width="0" layer="20"/>
-<text x="8.89" y="6.0325" size="0.6096" layer="21" rot="R270" align="center-right">GND</text>
-<text x="11.43" y="6.0325" size="0.6096" layer="21" rot="R270" align="center-right">OUT</text>
-<text x="13.97" y="6.0325" size="0.6096" layer="21" rot="R270" align="center-right">V-</text>
-<text x="16.51" y="6.0325" size="0.6096" layer="21" rot="R270" align="center-right">V+</text>
+<text x="8.89" y="5.715" size="0.6096" layer="21" rot="R270" align="center-right">GND</text>
+<text x="11.43" y="5.715" size="0.6096" layer="21" rot="R270" align="center-right">VOUT</text>
+<text x="13.97" y="5.715" size="0.6096" layer="21" rot="R270" align="center-right">-3.3V</text>
+<text x="16.51" y="5.715" size="0.6096" layer="21" rot="R270" align="center-right">+3.3V</text>
 </plain>
 <libraries>
 <library name="SparkFun-Connectors">
