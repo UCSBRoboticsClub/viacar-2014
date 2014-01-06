@@ -10355,8 +10355,8 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <instance part="SUPPLY6" gate="G$1" x="137.16" y="109.22"/>
 <instance part="GND6" gate="1" x="137.16" y="91.44"/>
 <instance part="GND7" gate="1" x="177.8" y="91.44"/>
-<instance part="R1" gate="G$1" x="170.18" y="99.06" rot="R90"/>
-<instance part="R2" gate="G$1" x="152.4" y="83.82" rot="R90"/>
+<instance part="R1" gate="G$1" x="170.18" y="99.06" rot="R270"/>
+<instance part="R2" gate="G$1" x="152.4" y="83.82" rot="R270"/>
 <instance part="GND8" gate="1" x="152.4" y="73.66"/>
 <instance part="SUPPLY7" gate="G$1" x="137.16" y="45.72"/>
 <instance part="GND9" gate="1" x="144.78" y="27.94"/>
@@ -10436,7 +10436,7 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <pinref part="C6" gate="G$1" pin="-"/>
 </segment>
 <segment>
-<pinref part="R2" gate="G$1" pin="1"/>
+<pinref part="R2" gate="G$1" pin="2"/>
 <pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="152.4" y1="76.2" x2="152.4" y2="78.74" width="0.1524" layer="91"/>
 </segment>
@@ -10615,7 +10615,7 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <wire x1="177.8" y1="106.68" x2="177.8" y2="109.22" width="0.1524" layer="91"/>
 <junction x="177.8" y="106.68"/>
 <label x="177.8" y="109.22" size="1.778" layer="95"/>
-<pinref part="R1" gate="G$1" pin="2"/>
+<pinref part="R1" gate="G$1" pin="1"/>
 <wire x1="170.18" y1="104.14" x2="170.18" y2="106.68" width="0.1524" layer="91"/>
 <junction x="170.18" y="106.68"/>
 <pinref part="C6" gate="G$1" pin="+"/>
@@ -10630,9 +10630,9 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <net name="N$4" class="0">
 <segment>
 <pinref part="U3" gate="1" pin="ADJ"/>
-<pinref part="R2" gate="G$1" pin="2"/>
+<pinref part="R2" gate="G$1" pin="1"/>
 <wire x1="152.4" y1="99.06" x2="152.4" y2="91.44" width="0.1524" layer="91"/>
-<pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="R1" gate="G$1" pin="2"/>
 <wire x1="152.4" y1="91.44" x2="152.4" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="93.98" x2="170.18" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="91.44" x2="152.4" y2="91.44" width="0.1524" layer="91"/>
