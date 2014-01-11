@@ -8825,7 +8825,7 @@ diameter 5 mm, grid 2.54 mm</description>
 </class>
 </classes>
 <parts>
-<part name="JP1" library="SparkFun-Connectors" deviceset="M04" device="LOCK_LONGPADS"/>
+<part name="JP1" library="SparkFun-Connectors" deviceset="M04" device="POLAR_LOCK"/>
 <part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>

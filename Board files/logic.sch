@@ -246,7 +246,7 @@ Basic SMA packaged diode. Good for reverse polarization protection. Common part 
 <rectangle x1="0.39" y1="2" x2="0.88" y2="3.1" layer="51"/>
 <rectangle x1="-0.88" y1="2" x2="-0.39" y2="3.1" layer="51"/>
 <rectangle x1="-2.15" y1="2" x2="-1.66" y2="3.1" layer="51"/>
-<circle x="-1.5875" y="-0.9525" radius="0.3175" width="0" layer="21"/>
+<circle x="-1.905" y="-0.635" radius="0.3175" width="0" layer="21"/>
 </package>
 <package name="NRF24L01+">
 <pad name="1" x="-3.81" y="-1.27" drill="1.016" diameter="1.8796" shape="square"/>
@@ -10314,8 +10314,8 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <part name="A2" library="Custom" deviceset="NRF24L01+" device=""/>
 <part name="A1" library="Teensy3.0" deviceset="TEENSY_3.0_SIDES" device=""/>
 <part name="SERVO" library="SparkFun-Connectors" deviceset="M03" device="LOCK_LONGPADS"/>
-<part name="SENSOR_L" library="SparkFun-Connectors" deviceset="M04" device="LOCK"/>
-<part name="SENSOR_R" library="SparkFun-Connectors" deviceset="M04" device="LOCK"/>
+<part name="SENSOR_L" library="SparkFun-Connectors" deviceset="M04" device="POLAR_LOCK"/>
+<part name="SENSOR_R" library="SparkFun-Connectors" deviceset="M04" device="POLAR_LOCK"/>
 <part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY8" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="SUPPLY9" library="SparkFun-Aesthetics" deviceset="VNEG" device=""/>
@@ -10325,10 +10325,13 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY13" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="C7" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="0.1uF"/>
-<part name="MOTOR" library="SparkFun-Connectors" deviceset="M04" device="LOCK"/>
+<part name="MOTOR" library="SparkFun-Connectors" deviceset="M04" device="POLAR_LOCK"/>
 <part name="GND11" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND12" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SJ1" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="TRACE"/>
+<part name="JP2" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
+<part name="SUPPLY14" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
+<part name="GND14" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -10355,8 +10358,8 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <instance part="SUPPLY6" gate="G$1" x="137.16" y="109.22"/>
 <instance part="GND6" gate="1" x="137.16" y="91.44"/>
 <instance part="GND7" gate="1" x="177.8" y="91.44"/>
-<instance part="R1" gate="G$1" x="170.18" y="99.06" rot="R270"/>
-<instance part="R2" gate="G$1" x="152.4" y="83.82" rot="R270"/>
+<instance part="R1" gate="G$1" x="170.18" y="99.06" rot="R90"/>
+<instance part="R2" gate="G$1" x="152.4" y="83.82" rot="R90"/>
 <instance part="GND8" gate="1" x="152.4" y="73.66"/>
 <instance part="SUPPLY7" gate="G$1" x="137.16" y="45.72"/>
 <instance part="GND9" gate="1" x="144.78" y="27.94"/>
@@ -10382,6 +10385,9 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <instance part="GND11" gate="1" x="160.02" y="-2.54"/>
 <instance part="GND12" gate="1" x="160.02" y="-30.48"/>
 <instance part="SJ1" gate="1" x="137.16" y="38.1"/>
+<instance part="JP2" gate="G$1" x="22.86" y="66.04"/>
+<instance part="SUPPLY14" gate="G$1" x="33.02" y="71.12"/>
+<instance part="GND14" gate="1" x="33.02" y="60.96"/>
 </instances>
 <busses>
 </busses>
@@ -10436,7 +10442,7 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <pinref part="C6" gate="G$1" pin="-"/>
 </segment>
 <segment>
-<pinref part="R2" gate="G$1" pin="2"/>
+<pinref part="R2" gate="G$1" pin="1"/>
 <pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="152.4" y1="76.2" x2="152.4" y2="78.74" width="0.1524" layer="91"/>
 </segment>
@@ -10479,6 +10485,12 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <wire x1="160.02" y1="-22.86" x2="162.56" y2="-22.86" width="0.1524" layer="91"/>
 <wire x1="160.02" y1="-27.94" x2="160.02" y2="-22.86" width="0.1524" layer="91"/>
 <pinref part="GND12" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="JP2" gate="G$1" pin="1"/>
+<pinref part="GND14" gate="1" pin="GND"/>
+<wire x1="30.48" y1="66.04" x2="33.02" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="66.04" x2="33.02" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="V_BATT" class="0">
@@ -10564,6 +10576,12 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <pinref part="SUPPLY8" gate="G$1" pin="3.3V"/>
 <junction x="43.18" y="5.08"/>
 </segment>
+<segment>
+<pinref part="JP2" gate="G$1" pin="2"/>
+<pinref part="SUPPLY14" gate="G$1" pin="3.3V"/>
+<wire x1="30.48" y1="68.58" x2="33.02" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="68.58" x2="33.02" y2="71.12" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="VNEG" class="0">
 <segment>
@@ -10615,7 +10633,7 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <wire x1="177.8" y1="106.68" x2="177.8" y2="109.22" width="0.1524" layer="91"/>
 <junction x="177.8" y="106.68"/>
 <label x="177.8" y="109.22" size="1.778" layer="95"/>
-<pinref part="R1" gate="G$1" pin="1"/>
+<pinref part="R1" gate="G$1" pin="2"/>
 <wire x1="170.18" y1="104.14" x2="170.18" y2="106.68" width="0.1524" layer="91"/>
 <junction x="170.18" y="106.68"/>
 <pinref part="C6" gate="G$1" pin="+"/>
@@ -10630,9 +10648,9 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <net name="N$4" class="0">
 <segment>
 <pinref part="U3" gate="1" pin="ADJ"/>
-<pinref part="R2" gate="G$1" pin="1"/>
+<pinref part="R2" gate="G$1" pin="2"/>
 <wire x1="152.4" y1="99.06" x2="152.4" y2="91.44" width="0.1524" layer="91"/>
-<pinref part="R1" gate="G$1" pin="2"/>
+<pinref part="R1" gate="G$1" pin="1"/>
 <wire x1="152.4" y1="91.44" x2="152.4" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="93.98" x2="170.18" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="91.44" x2="152.4" y2="91.44" width="0.1524" layer="91"/>
