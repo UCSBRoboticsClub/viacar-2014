@@ -1996,8 +1996,10 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="26.67" y1="30.48" x2="25.019" y2="32.131" width="0.1524" layer="1"/>
 <wire x1="25.019" y1="32.131" x2="25.019" y2="34.036" width="0.1524" layer="1"/>
 <wire x1="25.019" y1="34.036" x2="13.97" y2="45.085" width="0.1524" layer="1"/>
-<wire x1="13.97" y1="45.085" x2="9.652" y2="45.085" width="0.1524" layer="1"/>
-<wire x1="9.652" y1="45.085" x2="5.5245" y2="49.2125" width="0.1524" layer="1"/>
+<wire x1="13.97" y1="45.085" x2="10.922" y2="45.085" width="0.1524" layer="1"/>
+<via x="10.922" y="45.085" extent="1-16" drill="0.3302"/>
+<wire x1="10.922" y1="45.085" x2="9.652" y2="45.085" width="0.1524" layer="16"/>
+<wire x1="9.652" y1="45.085" x2="5.5245" y2="49.2125" width="0.1524" layer="16"/>
 </signal>
 <signal name="N$12">
 <contactref element="A1" pad="AGND"/>
