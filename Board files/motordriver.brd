@@ -501,9 +501,9 @@ Please make sure your boards conform to these design rules.</description>
 </element>
 <element name="JP2" library="SparkFun-Connectors" package="SCREWTERMINAL-5MM-2" value="BATTERY" x="20.6375" y="3.81" smashed="yes"/>
 <element name="JP3" library="SparkFun-Connectors" package="SCREWTERMINAL-5MM-2" value="MOTOR" x="18.53565" y="40.64" smashed="yes" rot="R180"/>
-<element name="Q1" library="SparkFun-DiscreteSemi" package="DPAK" value="IPB034N03L" x="25.68575" y="19.304" smashed="yes">
-<attribute name="PROD_ID" value="TRANS-09984" x="25.68575" y="19.304" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="22.00275" y="15.602" size="0.6096" layer="25" rot="R90"/>
+<element name="Q1" library="SparkFun-DiscreteSemi" package="DPAK" value="IPB034N03L" x="26.32075" y="19.304" smashed="yes">
+<attribute name="PROD_ID" value="TRANS-09984" x="26.32075" y="19.304" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="22.63775" y="15.602" size="0.6096" layer="25" rot="R90"/>
 </element>
 <element name="C1" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="18.57375" y="11.43" rot="R90"/>
 <element name="C2" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="26.19375" y="33.655" rot="R90"/>
@@ -533,8 +533,8 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="C3" pad="2"/>
 <polygon width="0.254" layer="1">
 <vertex x="0" y="0"/>
-<vertex x="22.99335" y="0"/>
-<vertex x="22.99335" y="18.161"/>
+<vertex x="22.95525" y="0"/>
+<vertex x="22.95525" y="18.161"/>
 <vertex x="31.75" y="18.161"/>
 <vertex x="31.75" y="36.83"/>
 <vertex x="0" y="36.83"/>
@@ -564,14 +564,14 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="17.67375" y1="12.33" x2="18.57375" y2="12.33" width="0.1524" layer="1"/>
 <polygon width="0.254" layer="1">
 <vertex x="31.75" y="0"/>
-<vertex x="23.39975" y="0"/>
-<vertex x="23.39975" y="17.7546"/>
+<vertex x="23.368" y="0"/>
+<vertex x="23.368" y="17.7546"/>
 <vertex x="31.75" y="17.7546"/>
 </polygon>
 <wire x1="18.57375" y1="12.33" x2="18.57375" y2="13.335" width="0.1524" layer="1"/>
 <via x="18.57375" y="13.335" extent="1-16" drill="0.3302"/>
-<wire x1="18.57375" y1="13.335" x2="25.24125" y2="13.335" width="0.1524" layer="16"/>
-<via x="25.24125" y="13.335" extent="1-16" drill="0.3302"/>
+<wire x1="18.57375" y1="13.335" x2="25.87625" y2="13.335" width="0.1524" layer="16"/>
+<via x="25.87625" y="13.335" extent="1-16" drill="0.3302"/>
 </signal>
 <signal name="OUTB">
 <contactref element="U1" pad="15"/>
@@ -689,9 +689,9 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="Q1" pad="1"/>
 <wire x1="15.22375" y1="15.03" x2="15.22375" y2="16.51" width="0.1524" layer="1"/>
 <via x="15.22375" y="16.51" extent="1-16" drill="0.3302"/>
-<wire x1="15.22375" y1="16.51" x2="23.40575" y2="16.51" width="0.1524" layer="16"/>
-<via x="23.40575" y="16.51" extent="1-16" drill="0.3302"/>
-<wire x1="23.40575" y1="16.51" x2="23.40575" y2="13.994" width="0.1524" layer="1"/>
+<wire x1="15.22375" y1="16.51" x2="24.04075" y2="16.51" width="0.1524" layer="16"/>
+<via x="24.04075" y="16.51" extent="1-16" drill="0.3302"/>
+<wire x1="24.04075" y1="16.51" x2="24.04075" y2="13.994" width="0.1524" layer="1"/>
 </signal>
 <signal name="VCC">
 <contactref element="U1" pad="SLUG1"/>
@@ -736,19 +736,19 @@ Please make sure your boards conform to these design rules.</description>
 <via x="16.1925" y="19.4945" extent="1-16" drill="0.3302"/>
 <wire x1="13.0175" y1="21.082" x2="13.0175" y2="21.59" width="0.1524" layer="1"/>
 <wire x1="13.0175" y1="21.59" x2="12.22375" y2="21.59" width="0.1524" layer="1"/>
-<via x="25.68575" y="19.304" extent="1-16" drill="0.3302"/>
-<via x="24.09825" y="19.304" extent="1-16" drill="0.3302"/>
-<via x="27.27325" y="19.304" extent="1-16" drill="0.3302"/>
-<via x="27.27325" y="20.8915" extent="1-16" drill="0.3302"/>
-<via x="25.68575" y="20.8915" extent="1-16" drill="0.9"/>
-<via x="24.09825" y="20.8915" extent="1-16" drill="0.3302"/>
-<via x="24.09825" y="22.479" extent="1-16" drill="0.3302"/>
-<via x="25.68575" y="22.479" extent="1-16" drill="0.3302"/>
-<via x="27.27325" y="22.479" extent="1-16" drill="0.3302"/>
-<wire x1="25.68575" y1="20.8915" x2="25.68575" y2="20.32" width="0.1524" layer="1"/>
-<wire x1="25.68575" y1="20.32" x2="26.19375" y2="20.32" width="0.1524" layer="1"/>
-<wire x1="26.19375" y1="20.32" x2="26.19375" y2="20.892" width="0.1524" layer="1"/>
-<wire x1="26.19375" y1="20.892" x2="25.68575" y2="20.892" width="0.1524" layer="1"/>
+<via x="26.32075" y="19.304" extent="1-16" drill="0.3302"/>
+<via x="24.73325" y="19.304" extent="1-16" drill="0.3302"/>
+<via x="27.90825" y="19.304" extent="1-16" drill="0.3302"/>
+<via x="27.90825" y="20.8915" extent="1-16" drill="0.3302"/>
+<via x="26.32075" y="20.8915" extent="1-16" drill="0.9"/>
+<via x="24.73325" y="20.8915" extent="1-16" drill="0.3302"/>
+<via x="24.73325" y="22.479" extent="1-16" drill="0.3302"/>
+<via x="26.32075" y="22.479" extent="1-16" drill="0.3302"/>
+<via x="27.90825" y="22.479" extent="1-16" drill="0.3302"/>
+<wire x1="26.32075" y1="20.8915" x2="26.32075" y2="20.32" width="0.1524" layer="1"/>
+<wire x1="26.32075" y1="20.32" x2="26.82875" y2="20.32" width="0.1524" layer="1"/>
+<wire x1="26.82875" y1="20.32" x2="26.82875" y2="20.892" width="0.1524" layer="1"/>
+<wire x1="26.82875" y1="20.892" x2="26.32075" y2="20.892" width="0.1524" layer="1"/>
 <wire x1="26.19375" y1="32.755" x2="26.19375" y2="29.21" width="0.8128" layer="1"/>
 </signal>
 <signal name="3.3V">
