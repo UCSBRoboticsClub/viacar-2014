@@ -506,9 +506,9 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="NAME" x="22.63775" y="15.602" size="0.6096" layer="25" rot="R90"/>
 </element>
 <element name="C1" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="18.57375" y="11.43" rot="R90"/>
-<element name="C2" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="26.19375" y="33.655" rot="R90"/>
-<element name="C3" library="SparkFun-Capacitors" package="CPOL-RADIAL-100UF-25V" value="47uF" x="26.19375" y="27.94" smashed="yes" rot="R90">
-<attribute name="NAME" x="24.28875" y="27.94" size="0.6096" layer="25" rot="R90" align="bottom-center"/>
+<element name="C2" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="28.86075" y="34.29" rot="R90"/>
+<element name="C3" library="SparkFun-Capacitors" package="CPOL-RADIAL-100UF-25V" value="47uF" x="26.32075" y="28.9687" smashed="yes" rot="R315">
+<attribute name="NAME" x="23.163959375" y="26.5374875" size="0.6096" layer="25" rot="R90" align="bottom-center"/>
 </element>
 <element name="R1" library="SparkFun-Resistors" package="0805" value="1k" x="5.87375" y="11.43" rot="R90"/>
 <element name="R5" library="SparkFun-Resistors" package="0805" value="1k" x="16.03375" y="11.43" rot="R90"/>
@@ -581,9 +581,8 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="JP3" pad="1"/>
 <polygon width="0.254" layer="16">
 <vertex x="12.22375" y="24.13"/>
-<vertex x="21.74875" y="24.13"/>
-<vertex x="21.74875" y="30.48"/>
-<vertex x="23.65375" y="32.385"/>
+<vertex x="19.20875" y="24.13"/>
+<vertex x="27.46375" y="32.385"/>
 <vertex x="31.75" y="32.385"/>
 <vertex x="31.75" y="44.45"/>
 <vertex x="16.35125" y="44.45"/>
@@ -711,9 +710,8 @@ Please make sure your boards conform to these design rules.</description>
 <vertex x="0" y="0"/>
 <vertex x="31.75" y="0"/>
 <vertex x="31.75" y="31.75"/>
-<vertex x="23.97125" y="31.75"/>
-<vertex x="22.38375" y="30.1625"/>
-<vertex x="22.38375" y="23.495"/>
+<vertex x="27.78125" y="31.75"/>
+<vertex x="19.52625" y="23.495"/>
 <vertex x="0" y="23.495"/>
 </polygon>
 <via x="13.0175" y="22.6695" extent="1-16" drill="0.3302"/>
@@ -749,7 +747,8 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="26.32075" y1="20.32" x2="26.82875" y2="20.32" width="0.1524" layer="1"/>
 <wire x1="26.82875" y1="20.32" x2="26.82875" y2="20.892" width="0.1524" layer="1"/>
 <wire x1="26.82875" y1="20.892" x2="26.32075" y2="20.892" width="0.1524" layer="1"/>
-<wire x1="26.19375" y1="32.755" x2="26.19375" y2="29.21" width="0.8128" layer="1"/>
+<wire x1="28.86075" y1="33.39" x2="28.86075" y2="29.712646875" width="0.6096" layer="1"/>
+<wire x1="28.86075" y1="29.712646875" x2="27.218775" y2="28.070671875" width="0.6096" layer="1"/>
 </signal>
 <signal name="3.3V">
 <contactref element="R2" pad="1"/>
@@ -855,6 +854,70 @@ Please make sure your boards conform to these design rules.</description>
 <approved hash="19,1,35300a0416fe29ca"/>
 <approved hash="3,1,3609340b340b3609"/>
 <approved hash="3,1,322b30293029322b"/>
+<approved hash="3,1,31d133d333d331d1"/>
+<approved hash="3,1,3243304130413243"/>
+<approved hash="18,29,8c32ee45f114efef"/>
+<approved hash="18,29,5d4c853abe637a98"/>
+<approved hash="18,29,333b974e8f9eac65"/>
+<approved hash="18,29,e436464378aa3753"/>
+<approved hash="18,29,08761167690f43f5"/>
+<approved hash="18,29,2597d2d62ef3ddf2"/>
+<approved hash="18,29,5936ad7d511ea115"/>
+<approved hash="18,29,d8650870192948de"/>
+<approved hash="18,29,b99c45bf692726cd"/>
+<approved hash="18,29,2647904c9044264f"/>
+<approved hash="18,29,62b1d4bad4b262b9"/>
+<approved hash="19,1,fbbb0f2f0c07f893"/>
+<approved hash="19,1,7dbd092908707ce4"/>
+<approved hash="19,1,3cbc08280cfb386f"/>
+<approved hash="19,1,f53c016e0f18fb4a"/>
+<approved hash="19,1,70b9092d087371e7"/>
+<approved hash="19,1,f6bf0f2b0c04f590"/>
+<approved hash="19,1,f1bb022f0105f291"/>
+<approved hash="19,1,36bc052801f9326d"/>
+<approved hash="19,1,77bd0429057276e6"/>
+<approved hash="19,1,fdbb1a2f1900fe94"/>
+<approved hash="19,1,3abc1d2819fc3e68"/>
+<approved hash="19,1,7bbd1c291d777ae3"/>
+<approved hash="19,1,bbfc3ec83f88babc"/>
+<approved hash="19,1,7b733e47228c67b8"/>
+<approved hash="19,1,fb7d3e490383c6b7"/>
+<approved hash="19,1,f5b502870980feb2"/>
+<approved hash="19,1,f53dc749fa8cc8f8"/>
+<approved hash="19,1,7533c747db8369f7"/>
+<approved hash="19,1,f07d48497580cdb4"/>
+<approved hash="19,1,70734847548f6cbb"/>
+<approved hash="19,1,b0fc48c8498bb1bf"/>
+<approved hash="19,1,bc43c9b7c8f8bd0c"/>
+<approved hash="19,1,fcc2c936f4f3c107"/>
+<approved hash="19,1,7cccc938d5fc6008"/>
+<approved hash="19,1,f07b80098b09fb7b"/>
+<approved hash="19,1,f57d4a497783c8b7"/>
+<approved hash="19,1,75734a47568c69b8"/>
+<approved hash="19,1,f73dc949f48ecafa"/>
+<approved hash="19,1,b7bcc9c8c885b6f1"/>
+<approved hash="19,1,7733c947d5816bf5"/>
+<approved hash="19,1,3ebc172813f83a6c"/>
+<approved hash="19,1,7fbd162917737ee7"/>
+<approved hash="19,1,f9bb102f1304fa90"/>
+<approved hash="19,1,3bbc18281cfe3f6a"/>
+<approved hash="19,1,fcbb1f2f1c02ff96"/>
+<approved hash="19,1,7abd192918757be1"/>
+<approved hash="19,1,753f816d8f207b72"/>
+<approved hash="19,1,f3bb032f0002f096"/>
+<approved hash="19,1,75bd0529047574e1"/>
+<approved hash="19,1,f0bb0e2f0d04f390"/>
+<approved hash="19,1,76bd0829097377e7"/>
+<approved hash="19,1,37bc09280df8336c"/>
+<approved hash="19,1,ff8b601f6038ffac"/>
+<approved hash="19,1,378468106b053491"/>
+<approved hash="19,1,378268166b3a34ae"/>
+<approved hash="19,1,d668a63aa6e5d6b7"/>
+<approved hash="19,1,3478ececeff43760"/>
+<approved hash="19,1,347eeceaefcb375f"/>
+<approved hash="19,1,338279167a3830ac"/>
+<approved hash="19,1,fb8b711f713afbae"/>
+<approved hash="19,1,338479107a073093"/>
 </errors>
 </board>
 </drawing>
