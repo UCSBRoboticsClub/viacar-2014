@@ -1610,6 +1610,7 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="NAME" x="18.161" y="9.779" size="0.6096" layer="25" rot="R90"/>
 <attribute name="VALUE" x="22.479" y="13.589" size="1.27" layer="27" ratio="10" rot="R90"/>
 </element>
+<element name="C11" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="15.875" y="34.925" rot="R180"/>
 </elements>
 <signals>
 <signal name="N$1">
@@ -1846,6 +1847,8 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="13.02" y1="31.9975" x2="13.02" y2="31.68" width="0.1524" layer="1"/>
 <wire x1="10.6025" y1="29.58" x2="12.7025" y2="31.68" width="0.1524" layer="1"/>
 <wire x1="12.7025" y1="31.68" x2="13.02" y2="31.68" width="0.1524" layer="1"/>
+<contactref element="C11" pad="2"/>
+<wire x1="15.24" y1="35.5" x2="14.975" y2="34.925" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$15">
 <contactref element="Q1" pad="1"/>
@@ -1886,6 +1889,8 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="15.9275" y1="33.3375" x2="6.0325" y2="23.4425" width="0.1524" layer="16"/>
 <via x="6.0325" y="23.4425" extent="1-16" drill="0.3302"/>
 <wire x1="6.0325" y1="23.4425" x2="3.81" y2="21.22" width="0.1524" layer="1"/>
+<contactref element="C11" pad="1"/>
+<wire x1="16.51" y1="35.5" x2="16.775" y2="34.925" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$19">
 <contactref element="U2" pad="2"/>
