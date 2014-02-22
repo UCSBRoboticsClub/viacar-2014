@@ -1,0 +1,294 @@
+#include <WProgram.h>
+#include "./VNH5019.h"
+#include "./RadioTerminal.h"
+#include "./Servo.h"
+#include "./ControlLoop.h"
+#include <IntervalTimer.h>
+#include <SPI.h>
+#include <cstdio>
+#include <cmath>
+
+
+unsigned long lastMillis = 0;
+unsigned int loopPeriodMs = 20;
+const float dt = loopPeriodMs / 1000.f;
+unsigned int cycleCount = 0;
+
+Motor motor(7, 6, 5);
+Servo steering(3);
+
+float kp, ki, kd;
+float v1, v2, x1, x2;
+float hsq1, hsq2, d;
+IntervalTimer watchTimer;
+
+ControlLoop steerLoop(dt);
+float error = 0.f;
+float speed = 0.20f;
+float throttle;
+float turn;
+
+
+class WatchHandler : public CmdHandler
+{
+public:
+    WatchHandler(float* watchAddr);
+    virtual void sendChar(char c) { watchTimer.end(); RadioTerminal::terminateCmd(); }
+    static float* watch;
+    
+    static void refresh();
+};
+
+float* WatchHandler::watch;
+
+
+CmdHandler* watch(const char* input)
+{
+    // Read command parameters
+    if (!strncmp(input, "w v1", 8))
+    {
+        return new WatchHandler(&v1);
+    }
+    else if (!strncmp(input, "w v2", 8))
+    {
+        return new WatchHandler(&v2);
+    }
+    else if (!strncmp(input, "w x1", 8))
+    {
+        return new WatchHandler(&x1);
+    }
+    else if (!strncmp(input, "w x2", 8))
+    {
+        return new WatchHandler(&x2);
+    }
+    else if (!strncmp(input, "w error", 8))
+    {
+        return new WatchHandler(&error);
+    }
+    else if (!strncmp(input, "w ierror", 8))
+    {
+        return new WatchHandler(&steerLoop.errorIntegral);
+    }
+    else if (!strncmp(input, "w derror", 8))
+    {
+        return new WatchHandler(&steerLoop.derivativeFilter);
+    }
+    else
+    {
+        RadioTerminal::write("error reading input parameters");
+        return NULL;
+    }
+}
+
+
+WatchHandler::WatchHandler(float* watchAddr)
+{
+    watch = watchAddr;
+    watchTimer.begin(&WatchHandler::refresh, 0.2f);
+}
+
+
+void WatchHandler::refresh()
+{
+    char output[256];
+
+    sprintf(output, "\r         \r\r\r%4.4f", *watch);
+    RadioTerminal::write(output);
+}
+
+
+CmdHandler* setkp(const char* input)
+{
+    char output[256];
+    
+    sscanf(input, "kp %f", &steerLoop.kp);
+    sprintf(output, "kp = %f", steerLoop.kp);
+    RadioTerminal::write(output);
+    
+    return NULL;
+}
+
+
+CmdHandler* setki(const char* input)
+{
+    char output[256];
+    
+    sscanf(input, "ki %f", &steerLoop.ki);
+    sprintf(output, "ki = %f", steerLoop.ki);
+    RadioTerminal::write(output);
+    
+    return NULL;
+}
+
+
+CmdHandler* setkd(const char* input)
+{
+    char output[256];
+    
+    sscanf(input, "kd %f", &steerLoop.kd);
+    sprintf(output, "kd = %f", steerLoop.kd);
+    RadioTerminal::write(output);
+    
+    return NULL;
+}
+
+
+CmdHandler* sethsq1(const char* input)
+{
+    char output[256];
+    
+    sscanf(input, "hsq1 %f", &hsq1);
+    sprintf(output, "hsq1 = %f", hsq1);
+    RadioTerminal::write(output);
+    
+    return NULL;
+}
+
+
+CmdHandler* sethsq2(const char* input)
+{
+    char output[256];
+    
+    sscanf(input, "hsq2 %f", &hsq2);
+    sprintf(output, "hsq2 = %f", hsq2);
+    RadioTerminal::write(output);
+    
+    return NULL;
+}
+
+
+CmdHandler* setd(const char* input)
+{
+    char output[256];
+    
+    sscanf(input, "d %f", &d);
+    sprintf(output, "d = %f", d);
+    RadioTerminal::write(output); 
+    
+    return NULL;
+}
+
+
+CmdHandler* setspeed(const char* input)
+{
+    char output[256];
+    
+    sscanf(input, "speed %f", &speed);
+    sprintf(output, "speed = %f", speed);
+    RadioTerminal::write(output); 
+    
+    return NULL;
+}
+
+
+float getError(float predicted)
+{
+    x1 = analogRead(A0)/4096.f;
+    x2 = analogRead(A1)/4096.f;
+    
+    float daa = abs(d + x1 - x2);
+    float dab = abs(d + x1 + x2);
+    float dba = abs(d - x1 - x2);
+    float dbb = abs(d - x1 + x2);
+    
+    float aa = (x1 + x2) / 2.0f;
+    float ab = (x1 - x2) / 2.0f;
+    float ba = (x2 - x1) / 2.0f;
+    float bb = (x1 + x2) / -2.0f;
+    
+    float eaa = abs(abs(aa) - predicted);
+    float eab = abs(abs(ab) - predicted);
+    float eba = abs(abs(ba) - predicted);
+    float ebb = abs(abs(bb) - predicted);
+    
+    float taa = daa + eaa;
+    float tab = dab + eab;
+    float tba = dba + eba;
+    float tbb = dbb + ebb;
+    
+    float m = taa;
+    float res = aa;
+    
+    if (m > tab)
+    {
+        m = tab;
+        res = ab;
+    }
+    if (m > tba)
+    {
+        m = tba;
+        res = ba;
+    }
+    if (m > tbb)
+    {
+        m = tbb;
+        res = bb;
+    }
+    
+    return res;
+}
+
+
+inline int deadzone(int input, int zone)
+{
+    return (input > zone || input < -zone) ? input : 0;
+}
+
+
+void setup()
+{
+    RadioTerminal::initialize(8, 9, 10);
+    RadioTerminal::reset();
+    
+    RadioTerminal::addCommand("kp", &setkp);
+    RadioTerminal::addCommand("ki", &setki);
+    RadioTerminal::addCommand("kd", &setkd);
+    RadioTerminal::addCommand("hsq1", &sethsq1);
+    RadioTerminal::addCommand("hsq2", &sethsq2);
+    RadioTerminal::addCommand("d", &setd);
+    RadioTerminal::addCommand("speed", &setspeed);
+    RadioTerminal::addCommand("w", &watch);
+    
+    analogReadRes(12);
+    analogReference(INTERNAL);
+    analogReadAveraging(16);
+    
+    steering.calibrate(1940, 1200, 60.f, -45.f);
+    
+    Serial.begin(115200);
+    
+    hsq1 = 3.125f;
+    hsq2 = 3.125f;
+    d = 7.25f;
+    
+    steerLoop.setTuning(0.5f, 0.0f, 0.05f);
+    steerLoop.setOutputLimits(-45.f, 45.f);
+}
+
+
+void loop()
+{
+    error = getError(error);
+    float control = steerLoop.update(error);
+
+    // Use manual steering if a controller message is present
+    if (RadioTerminal::rx_controller != 0)
+    {
+        turn = 60.f * 0.0078125f * deadzone((int8_t)((RadioTerminal::rx_controller>>16)&0xff), 8); // Convert to +/-1.0f range
+        throttle = 0.5f * -0.0078125f * deadzone((int8_t)((RadioTerminal::rx_controller>>8)&0xff), 8);
+    }
+    else
+    {
+        // Use PID control if no controller is detected
+        turn = control;
+        throttle = speed;
+    }
+    
+    steering = turn;
+    motor = throttle;
+    
+    // Limit loop speed to a consistent value to make timing and integration simpler
+    while (millis() - lastMillis < loopPeriodMs);
+    lastMillis = millis();
+    ++cycleCount;
+}
