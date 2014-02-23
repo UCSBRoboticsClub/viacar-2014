@@ -22,7 +22,7 @@ Servo steering(3);
 
 float kp, ki, kd;
 float v1, v2, x1, x2;
-float hsq1, hsq2, d;
+float C5, C6, d;
 
 ControlLoop steerLoop(dt);
 LowPass error;
@@ -138,24 +138,24 @@ CmdHandler* setkd(const char* input)
 }
 
 
-CmdHandler* sethsq1(const char* input)
+CmdHandler* setC5(const char* input)
 {
     char output[256];
     
-    sscanf(input, "hsq1 %f", &hsq1);
-    sprintf(output, "hsq1 = %f", hsq1);
+    sscanf(input, "c5 %f", &C5);
+    sprintf(output, "c5 = %f", C5);
     RadioTerminal::write(output);
     
     return NULL;
 }
 
 
-CmdHandler* sethsq2(const char* input)
+CmdHandler* setC6(const char* input)
 {
     char output[256];
     
-    sscanf(input, "hsq2 %f", &hsq2);
-    sprintf(output, "hsq2 = %f", hsq2);
+    sscanf(input, "c6 %f", &C6);
+    sprintf(output, "c6 = %f", C6);
     RadioTerminal::write(output);
     
     return NULL;
@@ -188,8 +188,11 @@ CmdHandler* setspeed(const char* input)
 
 float getError(float predicted)
 {
-    x1 = analogRead(A0)/4096.f;
-    x2 = analogRead(A1)/4096.f;
+    v1 = analogRead(A0)/4096.f;
+    v2 = analogRead(A1)/4096.f;
+    
+    x1 = volt2dist(v1);
+    x2 = volt2dist(v2);
     
     float daa = abs(d + x1 - x2);
     float dab = abs(d + x1 + x2);
@@ -234,7 +237,22 @@ float getError(float predicted)
 }
 
 
-inline int deadzone(int input, int zone)
+float volt2dist(float v)
+{
+    const float C1 = 0.546f;
+    const float C2 = 8.16f;
+    const float C3 = 0.00330f;
+    const float C4 = 2.43f;
+    // C5 and C6 are variable, defined globally
+
+    float eout = (v - C1) * C2;
+    float vin = C3 * exp(-eout / C4);
+    float xsq = C5 / vin - C6;
+    return sqrt(xsq > 0.f ? xsq : 0.f);
+}
+
+
+int deadzone(int input, int zone)
 {
     return (input > zone || input < -zone) ? input : 0;
 }
@@ -248,8 +266,8 @@ void setup()
     RadioTerminal::addCommand("kp", &setkp);
     RadioTerminal::addCommand("ki", &setki);
     RadioTerminal::addCommand("kd", &setkd);
-    RadioTerminal::addCommand("hsq1", &sethsq1);
-    RadioTerminal::addCommand("hsq2", &sethsq2);
+    RadioTerminal::addCommand("c5", &setC5);
+    RadioTerminal::addCommand("c6", &setC6);
     RadioTerminal::addCommand("d", &setd);
     RadioTerminal::addCommand("speed", &setspeed);
     RadioTerminal::addCommand("w", &watch);
@@ -262,9 +280,9 @@ void setup()
     
     Serial.begin(115200);
     
-    hsq1 = 3.125f;
-    hsq2 = 3.125f;
-    d = 7.25f;
+    C5 = 8.f; // Get this from testing
+    C6 = 64.f; // h^2 (cm)
+    d = 10.f;
     
     steerLoop.setTuning(0.5f, 0.0f, 0.05f);
     steerLoop.setOutputLimits(-45.f, 45.f);
