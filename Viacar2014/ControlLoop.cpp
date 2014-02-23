@@ -1,20 +1,48 @@
 #include "ControlLoop.h"
 
 
-const float ControlLoop::derivativeFilterConstant = 0.2f;
-
-ControlLoop::ControlLoop(float dt) : dt(dt), kp(0.f), ki(0.f), kd(0.f), errorIntegral(0.f), outputMax(1.f), outputMin(-1.f)
+ControlLoop::ControlLoop(float dt) : 
+    dt(dt), 
+    kp(0.f), 
+    ki(0.f), 
+    kd(0.f), 
+    ierror(0.f), 
+    outputMax(1.f), 
+    outputMin(-1.f),
+    lastError(0.f)
 {
-    for (int i = 0; i < errorValues.capacity(); ++i)
-        errorValues.push(0.f);
 }
 
 
 void ControlLoop::setTuning(float kp, float ki, float kd)
 {
     this->kp = kp;
-    this->kd = kd;
     this->ki = ki;
+    this->kd = kd;
+}
+
+
+void ControlLoop::setKp(float kp)
+{
+    this->kp = kp;
+}
+
+
+void ControlLoop::setKi(float ki)
+{
+    this->ki = ki;
+}
+
+
+void ControlLoop::setKd(float kd)
+{
+    this->kd = kd;
+}
+
+
+float ControlLoop::setDerivCutoffFreq(float freq)
+{
+    derror.setCutoffFreq(freq, dt);
 }
 
 
@@ -27,13 +55,11 @@ void ControlLoop::setOutputLimits(float min, float max)
 
 float ControlLoop::update(float error, float feedForward)
 {
-    float tempErrorIntegral = errorIntegral + error * dt;
+    float ierrorTemp = ierror + error * dt;
     
-    errorValues.push(error);
-    derivativeFilter *= (1.f - derivativeFilterConstant);
-    derivativeFilter += derivativeFilterConstant * derivative(errorValues);
+    derror = (error - lastError) / dt;
     
-    float control = feedForward + kp * error + ki * tempErrorIntegral + kd * derivativeFilter;
+    float control = feedForward + kp * error + ki * ierrorTemp + kd * derror;
     
     if (ki > 0.f)
     {
@@ -41,21 +67,15 @@ float ControlLoop::update(float error, float feedForward)
         if ( !(control > outputMax && error > 0.f) &&
              !(control < outputMin && error < 0.f) )
         {
-            errorIntegral = tempErrorIntegral;
+            ierror = ierrorTemp;
         }
         
         // Limit the integral to the amount needed to saturate the output
-        if (errorIntegral * ki > outputMax)
-            errorIntegral = outputMax / ki;
-        if (errorIntegral * ki < outputMin)
-            errorIntegral = outputMin / ki;
+        if (ierror * ki > outputMax)
+            ierror = outputMax / ki;
+        if (ierror * ki < outputMin)
+            ierror = outputMin / ki;
     }
     
     return control > outputMax ? outputMax : (control < outputMin ? outputMin : control);
-}
-
-
-float ControlLoop::derivative(RingBuffer<float, 2>& x)
-{
-    return (x[0] - x[1]) / dt;
 }

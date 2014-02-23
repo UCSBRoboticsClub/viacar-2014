@@ -1,30 +1,31 @@
 #ifndef CONTROLLOOP_H
 #define CONTROLLOOP_H
 
-#include "RingBuffer.h"
+#include "LowPass.h"
 
 
 class ControlLoop
 {
 public:
     ControlLoop(float dt);
-    void setTuning(float kp, float ki, float kd);
-    void setOutputLimits(float min, float max);
     float update(float error, float feedForward = 0.f);
+    void setTuning(float kp, float ki, float kd);
+    void setKp(float kp);
+    void setKi(float ki);
+    void setKd(float kd);
+    float setDerivCutoffFreq(float freq);
+    void setOutputLimits(float min, float max);
     
-//private:
-    RingBuffer<float, 2> errorValues;
-    float errorIntegral;
+private:
+    float ierror;
+    LowPass derror;
     const float dt;
     float kp;
     float ki;
     float kd;
     float outputMin;
     float outputMax;
-    
-    float derivative(RingBuffer<float, 2>& x);
-    float derivativeFilter;
-    static const float derivativeFilterConstant;
+    float lastError;
 };
 
 #endif // CONTROLLOOP_H

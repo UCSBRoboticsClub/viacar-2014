@@ -1,5 +1,5 @@
-#ifndef _MOTOR_H
-#define _MOTOR_H
+#ifndef VNH5019_H
+#define VNH5019_H
 
 
 class Motor
@@ -16,4 +16,4 @@ private:
 	int speedPin;
 };
 
-#endif // _MOTOR_H
+#endif // VNH5019_H

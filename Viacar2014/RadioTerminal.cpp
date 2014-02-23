@@ -1,6 +1,6 @@
 #include <WProgram.h>
-#include "./RadioTerminal.h"
-#include "./nRF24L01P_defs.h"
+#include "RadioTerminal.h"
+#include "nRF24L01P_defs.h"
 #include <SPI.h>
 #include <IntervalTimer.h>
 #include <cctype>
@@ -44,7 +44,7 @@ namespace RadioTerminal
     int numCommands;
     
     IntervalTimer clearTimer;
-    auto clearFun = [&](){ rx_controller = 0; };
+    auto clearFun = [&]{ rx_controller = 0; };
 
 
     void initialize(int csnPin, int cePin, int irqPin)

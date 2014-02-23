@@ -3,16 +3,19 @@
 #include "./RadioTerminal.h"
 #include "./Servo.h"
 #include "./ControlLoop.h"
+#include "./LowPass.h"
 #include <IntervalTimer.h>
 #include <SPI.h>
 #include <cstdio>
 #include <cmath>
+#include <functional>
 
 
-unsigned long lastMillis = 0;
-unsigned int loopPeriodMs = 20;
-const float dt = loopPeriodMs / 1000.f;
-unsigned int cycleCount = 0;
+unsigned int loopFreq = 100;
+unsigned int loopPeriodUs = 1000000 / loopFreq;
+const float dt = loopPeriodUs / 1000000.f;
+unsigned int lastMicros = 0;
+LowPass loadPercent;
 
 Motor motor(7, 6, 5);
 Servo steering(3);
@@ -20,10 +23,10 @@ Servo steering(3);
 float kp, ki, kd;
 float v1, v2, x1, x2;
 float hsq1, hsq2, d;
-IntervalTimer watchTimer;
 
 ControlLoop steerLoop(dt);
-float error = 0.f;
+LowPass error;
+LowPass control;
 float speed = 0.20f;
 float throttle;
 float turn;
@@ -32,14 +35,14 @@ float turn;
 class WatchHandler : public CmdHandler
 {
 public:
-    WatchHandler(float* watchAddr);
-    virtual void sendChar(char c) { watchTimer.end(); RadioTerminal::terminateCmd(); }
-    static float* watch;
-    
+    WatchHandler(std::function<float ()> watchFun);
+    virtual void sendChar(char c) { timer.end(); RadioTerminal::terminateCmd(); }
+    static std::function<float ()> watch;
+    IntervalTimer timer;
     static void refresh();
 };
 
-float* WatchHandler::watch;
+std::function<float ()> WatchHandler::watch;
 
 
 CmdHandler* watch(const char* input)
@@ -47,31 +50,27 @@ CmdHandler* watch(const char* input)
     // Read command parameters
     if (!strncmp(input, "w v1", 8))
     {
-        return new WatchHandler(&v1);
+        return new WatchHandler([&]{ return v1; });
     }
     else if (!strncmp(input, "w v2", 8))
     {
-        return new WatchHandler(&v2);
+        return new WatchHandler([&]{ return v2; });
     }
     else if (!strncmp(input, "w x1", 8))
     {
-        return new WatchHandler(&x1);
+        return new WatchHandler([&]{ return x1; });
     }
     else if (!strncmp(input, "w x2", 8))
     {
-        return new WatchHandler(&x2);
+        return new WatchHandler([&]{ return x2; });
     }
     else if (!strncmp(input, "w error", 8))
     {
-        return new WatchHandler(&error);
+        return new WatchHandler([&]{ return float(error); });
     }
-    else if (!strncmp(input, "w ierror", 8))
+    else if (!strncmp(input, "w load", 8))
     {
-        return new WatchHandler(&steerLoop.errorIntegral);
-    }
-    else if (!strncmp(input, "w derror", 8))
-    {
-        return new WatchHandler(&steerLoop.derivativeFilter);
+        return new WatchHandler([&]{ return float(loadPercent); });
     }
     else
     {
@@ -81,10 +80,10 @@ CmdHandler* watch(const char* input)
 }
 
 
-WatchHandler::WatchHandler(float* watchAddr)
+WatchHandler::WatchHandler(std::function<float ()> watchFun)
 {
-    watch = watchAddr;
-    watchTimer.begin(&WatchHandler::refresh, 0.2f);
+    watch = watchFun;
+    timer.begin(&WatchHandler::refresh, 0.2f);
 }
 
 
@@ -92,7 +91,7 @@ void WatchHandler::refresh()
 {
     char output[256];
 
-    sprintf(output, "\r         \r\r\r%4.4f", *watch);
+    sprintf(output, "\r         \r\r\r%4.4f", watch());
     RadioTerminal::write(output);
 }
 
@@ -101,8 +100,10 @@ CmdHandler* setkp(const char* input)
 {
     char output[256];
     
-    sscanf(input, "kp %f", &steerLoop.kp);
-    sprintf(output, "kp = %f", steerLoop.kp);
+    float kp;
+    sscanf(input, "kp %f", &kp);
+    steerLoop.setKp(kp);
+    sprintf(output, "kp = %f", kp);
     RadioTerminal::write(output);
     
     return NULL;
@@ -113,8 +114,10 @@ CmdHandler* setki(const char* input)
 {
     char output[256];
     
-    sscanf(input, "ki %f", &steerLoop.ki);
-    sprintf(output, "ki = %f", steerLoop.ki);
+    float ki;
+    sscanf(input, "ki %f", &ki);
+    steerLoop.setKi(ki);
+    sprintf(output, "ki = %f", ki);
     RadioTerminal::write(output);
     
     return NULL;
@@ -125,8 +128,10 @@ CmdHandler* setkd(const char* input)
 {
     char output[256];
     
-    sscanf(input, "kd %f", &steerLoop.kd);
-    sprintf(output, "kd = %f", steerLoop.kd);
+    float kd;
+    sscanf(input, "kd %f", &kd);
+    steerLoop.setKd(kd);
+    sprintf(output, "kd = %f", kd);
     RadioTerminal::write(output);
     
     return NULL;
@@ -263,13 +268,18 @@ void setup()
     
     steerLoop.setTuning(0.5f, 0.0f, 0.05f);
     steerLoop.setOutputLimits(-45.f, 45.f);
+    
+    error.setCutoffFreq(10.f, dt);
+    control.setCutoffFreq(1.f, dt);
+    loadPercent.setFilterConst(0.9f);
+    
 }
 
 
 void loop()
 {
     error = getError(error);
-    float control = steerLoop.update(error);
+    control = steerLoop.update(error);
 
     // Use manual steering if a controller message is present
     if (RadioTerminal::rx_controller != 0)
@@ -287,8 +297,8 @@ void loop()
     steering = turn;
     motor = throttle;
     
+    loadPercent = micros() / loopPeriodUs;
     // Limit loop speed to a consistent value to make timing and integration simpler
-    while (millis() - lastMillis < loopPeriodMs);
-    lastMillis = millis();
-    ++cycleCount;
+    while (micros() - lastMicros < loopPeriodUs);
+    lastMicros = micros();
 }
