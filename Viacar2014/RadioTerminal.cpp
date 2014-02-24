@@ -253,7 +253,7 @@ namespace RadioTerminal
             data |= SPI.transfer(NOP)<<24;
             digitalWrite(_csnPin, 1);
             
-            // Sort into recieve buffer
+            // Sort into receive buffer
             switch(pipe)
             {
             case STATUS_RN_P_NO_P0:

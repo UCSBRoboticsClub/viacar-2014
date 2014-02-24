@@ -22,7 +22,11 @@ Servo steering(3);
 
 float kp, ki, kd;
 float v1, v2, x1, x2;
-float C5, C6, d;
+const float C1 = 0.546f;
+const float C2 = 8.16f;
+const float C3 = 0.00330f;
+const float C4 = 2.43f;
+float h, d, vinmax;
 
 ControlLoop steerLoop(dt);
 LowPass error;
@@ -71,6 +75,10 @@ CmdHandler* watch(const char* input)
     else if (!strncmp(input, "w load", 8))
     {
         return new WatchHandler([&]{ return float(loadPercent); });
+    }
+    else if (!strncmp(input, "w vinmax", 8))
+    {
+        return new WatchHandler([&]{ return vinmax; });
     }
     else
     {
@@ -138,24 +146,12 @@ CmdHandler* setkd(const char* input)
 }
 
 
-CmdHandler* setC5(const char* input)
+CmdHandler* seth(const char* input)
 {
     char output[256];
     
-    sscanf(input, "c5 %f", &C5);
-    sprintf(output, "c5 = %f", C5);
-    RadioTerminal::write(output);
-    
-    return NULL;
-}
-
-
-CmdHandler* setC6(const char* input)
-{
-    char output[256];
-    
-    sscanf(input, "c6 %f", &C6);
-    sprintf(output, "c6 = %f", C6);
+    sscanf(input, "h %f", &h);
+    sprintf(output, "h = %f", h);
     RadioTerminal::write(output);
     
     return NULL;
@@ -239,16 +235,10 @@ float getError(float predicted)
 
 float volt2dist(float v)
 {
-    const float C1 = 0.546f;
-    const float C2 = 8.16f;
-    const float C3 = 0.00330f;
-    const float C4 = 2.43f;
-    // C5 and C6 are variable, defined globally
-
     float eout = (v - C1) * C2;
-    float vin = C3 * exp(-eout / C4);
-    float xsq = C5 / vin - C6;
-    return sqrt(xsq > 0.f ? xsq : 0.f);
+    float vin = C3 * exp(-eout * C4);
+    float xsq = vinmax / vin - 1.f;
+    return h * sqrt(xsq > 0.f ? xsq : 0.f);
 }
 
 
@@ -266,8 +256,7 @@ void setup()
     RadioTerminal::addCommand("kp", &setkp);
     RadioTerminal::addCommand("ki", &setki);
     RadioTerminal::addCommand("kd", &setkd);
-    RadioTerminal::addCommand("c5", &setC5);
-    RadioTerminal::addCommand("c6", &setC6);
+    RadioTerminal::addCommand("h", &seth);
     RadioTerminal::addCommand("d", &setd);
     RadioTerminal::addCommand("speed", &setspeed);
     RadioTerminal::addCommand("w", &watch);
@@ -280,9 +269,9 @@ void setup()
     
     Serial.begin(115200);
     
-    C5 = 8.f; // Get this from testing
-    C6 = 64.f; // h^2 (cm)
+    h = 8.f;
     d = 10.f;
+    vinmax = 1.f;
     
     steerLoop.setTuning(0.5f, 0.0f, 0.05f);
     steerLoop.setOutputLimits(-45.f, 45.f);
@@ -290,7 +279,6 @@ void setup()
     error.setCutoffFreq(10.f, dt);
     control.setCutoffFreq(1.f, dt);
     loadPercent.setFilterConst(0.9f);
-    
 }
 
 
