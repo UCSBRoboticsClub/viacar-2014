@@ -8863,12 +8863,12 @@ diameter 5 mm, grid 2.54 mm</description>
 <part name="SUPPLY5" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="C4" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="GND11" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="R14" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
-<part name="R15" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="68K"/>
+<part name="R14" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="68K"/>
+<part name="R15" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
 <part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY6" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="R16" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="40.2K"/>
-<part name="R17" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
+<part name="R16" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10K"/>
+<part name="R17" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="2K"/>
 <part name="C7" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="C8" library="SparkFun-Capacitors" deviceset="CAP" device="0805" value="0.1uF"/>
 <part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>

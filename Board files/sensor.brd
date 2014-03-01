@@ -1594,10 +1594,10 @@ Please make sure your boards conform to these design rules.</description>
 <element name="R10" library="SparkFun-Resistors" package="0805" value="1K" x="19.05" y="27.94"/>
 <element name="R13" library="SparkFun-Resistors" package="0805" value="499K" x="7.62" y="25.4" rot="R90"/>
 <element name="C4" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="3.81" y="25.4" rot="R90"/>
-<element name="R14" library="SparkFun-Resistors" package="0805" value="10K" x="3.81" y="20.32" rot="R90"/>
-<element name="R15" library="SparkFun-Resistors" package="0805" value="68K" x="7.62" y="10.16" rot="R90"/>
-<element name="R16" library="SparkFun-Resistors" package="0805" value="40.2K" x="15.24" y="10.16" rot="R270"/>
-<element name="R17" library="SparkFun-Resistors" package="0805" value="10K" x="11.43" y="10.16" rot="R90"/>
+<element name="R14" library="SparkFun-Resistors" package="0805" value="68K" x="3.81" y="20.32" rot="R90"/>
+<element name="R15" library="SparkFun-Resistors" package="0805" value="10K" x="7.62" y="10.16" rot="R90"/>
+<element name="R16" library="SparkFun-Resistors" package="0805" value="10K" x="15.24" y="10.16" rot="R270"/>
+<element name="R17" library="SparkFun-Resistors" package="0805" value="2K" x="11.43" y="10.16" rot="R90"/>
 <element name="C7" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="19.05" y="19.685" rot="R90"/>
 <element name="C8" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="19.05" y="15.875" rot="R90"/>
 <element name="C5" library="SparkFun-Capacitors" package="0805" value="0.1uF" x="19.05" y="40.005" rot="R90"/>
