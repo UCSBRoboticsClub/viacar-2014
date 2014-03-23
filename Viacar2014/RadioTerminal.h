@@ -4,6 +4,8 @@
 #define INPUT_BUFFER_MAX 32
 #define NUM_COMMANDS_MAX 16
 
+#define USB_SERIAL_ENABLE
+
 
 class CmdHandler
 {

@@ -45,6 +45,11 @@ namespace RadioTerminal
     
     IntervalTimer clearTimer;
     auto clearFun = [&]{ rx_controller = 0; };
+    
+    #ifdef USB_SERIAL_ENABLE
+    void serialReceive();
+    IntervalTimer serialRxTimer;
+    #endif
 
 
     void initialize(int csnPin, int cePin, int irqPin)
@@ -72,12 +77,17 @@ namespace RadioTerminal
         attachInterrupt(irqPin, receive, FALLING);
         
         // Set up clear timer
-        clearTimer.begin(clearFun, 0.5f);
+        clearTimer.begin(clearFun, 500000);
         
         // These values need to be initialized
         numCommands = 0;
         runningCmd = NULL;
         inputBuffer[0] = '\0';
+        
+        #ifdef USB_SERIAL_ENABLE
+        Serial.begin(115200);
+        serialRxTimer.begin(&serialReceive, 100000);
+        #endif
     }
 
 
@@ -188,6 +198,13 @@ namespace RadioTerminal
         setRegister(CONFIG, config);
         setRegister(STATUS, STATUS_TX_DS);
         digitalWrite(_cePin, 1);
+        
+        #ifdef USB_SERIAL_ENABLE
+        Serial.write( (data>>0) & 0xff );
+        Serial.write( (data>>8) & 0xff );
+        Serial.write( (data>>16) & 0xff );
+        Serial.write( (data>>24) & 0xff );
+        #endif
     }
 
 
@@ -268,7 +285,7 @@ namespace RadioTerminal
                 {
                     if ( ((data>>(8*i)) & 0xff) == '\0') break;
                     receiveChar( (char)((data>>(8*i)) & 0xff) );
-                    Serial.println((char)((data>>(8*i)) & 0xff));
+                    //Serial.println((char)((data>>(8*i)) & 0xff));
                 }
                 break;
                 
@@ -280,6 +297,19 @@ namespace RadioTerminal
         // Reset IRQ pin
         setRegister(STATUS, STATUS_RX_DR);
     }
+    
+    
+    #ifdef USB_SERIAL_ENABLE
+    void serialReceive()
+    {
+        while (Serial.available())
+        {
+            int c = Serial.read();
+            if (c != -1)
+                receiveChar(c);
+        }
+    }
+    #endif
     
     
     void receiveChar(char c)

@@ -11,7 +11,7 @@
 #include <functional>
 
 
-unsigned int loopFreq = 100;
+unsigned int loopFreq = 1000;
 unsigned int loopPeriodUs = 1000000 / loopFreq;
 const float dt = loopPeriodUs / 1000000.f;
 unsigned int lastMicros = 0;
@@ -26,7 +26,8 @@ const float C1 = 0.546f;
 const float C2 = 8.16f;
 const float C3 = 0.00330f;
 const float C4 = 2.43f;
-float h, d, vinmax;
+float h, d, vinmax, errorF, loadPercentF, loadMax;
+unsigned int loadMaxMillis;
 
 ControlLoop steerLoop(dt);
 LowPass error;
@@ -39,14 +40,14 @@ float turn;
 class WatchHandler : public CmdHandler
 {
 public:
-    WatchHandler(std::function<float ()> watchFun);
+    WatchHandler(float* w);
     virtual void sendChar(char c) { timer.end(); RadioTerminal::terminateCmd(); }
-    static std::function<float ()> watch;
+    static float* watch;
     IntervalTimer timer;
     static void refresh();
 };
 
-std::function<float ()> WatchHandler::watch;
+float* WatchHandler::watch;
 
 
 CmdHandler* watch(const char* input)
@@ -54,31 +55,35 @@ CmdHandler* watch(const char* input)
     // Read command parameters
     if (!strncmp(input, "w v1", 8))
     {
-        return new WatchHandler([&]{ return v1; });
+        return new WatchHandler(&v1);
     }
     else if (!strncmp(input, "w v2", 8))
     {
-        return new WatchHandler([&]{ return v2; });
+        return new WatchHandler(&v2);
     }
     else if (!strncmp(input, "w x1", 8))
     {
-        return new WatchHandler([&]{ return x1; });
+        return new WatchHandler(&x1);
     }
     else if (!strncmp(input, "w x2", 8))
     {
-        return new WatchHandler([&]{ return x2; });
+        return new WatchHandler(&x2);
     }
     else if (!strncmp(input, "w error", 8))
     {
-        return new WatchHandler([&]{ return float(error); });
+        return new WatchHandler(&errorF);
+    }
+    else if (!strncmp(input, "w loadmax", 8))
+    {
+        return new WatchHandler(&loadMax);
     }
     else if (!strncmp(input, "w load", 8))
     {
-        return new WatchHandler([&]{ return float(loadPercent); });
+        return new WatchHandler(&loadPercentF);
     }
     else if (!strncmp(input, "w vinmax", 8))
     {
-        return new WatchHandler([&]{ return vinmax; });
+        return new WatchHandler(&vinmax);
     }
     else
     {
@@ -88,10 +93,10 @@ CmdHandler* watch(const char* input)
 }
 
 
-WatchHandler::WatchHandler(std::function<float ()> watchFun)
+WatchHandler::WatchHandler(float* w)
 {
-    watch = watchFun;
-    timer.begin(&WatchHandler::refresh, 0.2f);
+    watch = w;
+    timer.begin(&WatchHandler::refresh, 200000);
 }
 
 
@@ -99,7 +104,7 @@ void WatchHandler::refresh()
 {
     char output[256];
 
-    sprintf(output, "\r         \r\r\r%4.4f", watch());
+    sprintf(output, "\r         \r\r\r%4.4f", *watch);
     RadioTerminal::write(output);
 }
 
@@ -276,7 +281,7 @@ void setup()
     steerLoop.setTuning(0.5f, 0.0f, 0.05f);
     steerLoop.setOutputLimits(-45.f, 45.f);
     
-    error.setCutoffFreq(10.f, dt);
+    error.setCutoffFreq(50.f, dt);
     control.setCutoffFreq(1.f, dt);
     loadPercent.setFilterConst(0.9f);
 }
@@ -303,7 +308,19 @@ void loop()
     steering = turn;
     motor = throttle;
     
-    loadPercent = micros() / loopPeriodUs;
+    // Calculate processor load information
+    float currentLoadPercent = float(micros() - lastMicros) / loopPeriodUs;
+    loadPercent = currentLoadPercent;
+    loadPercentF = loadPercent;
+    errorF = error;
+    if (loadMax < currentLoadPercent)
+    {
+        loadMax = currentLoadPercent;
+        loadMaxMillis = millis();
+    }
+    if (loadMaxMillis + 1000 < millis())
+        loadMax = currentLoadPercent;
+        
     // Limit loop speed to a consistent value to make timing and integration simpler
     while (micros() - lastMicros < loopPeriodUs);
     lastMicros = micros();
