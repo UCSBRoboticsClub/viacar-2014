@@ -4,11 +4,11 @@
 #include "./Servo.h"
 #include "./ControlLoop.h"
 #include "./LowPass.h"
+#include "./Button.h"
 #include <IntervalTimer.h>
 #include <SPI.h>
 #include <cstdio>
 #include <cmath>
-#include <functional>
 
 
 unsigned int loopFreq = 1000;
@@ -32,9 +32,11 @@ unsigned int loadMaxMillis;
 ControlLoop steerLoop(dt);
 LowPass error;
 LowPass control;
-float speed = 0.25f;
+float speed;
 float throttle;
 float turn;
+
+Button calSwitch(0, LOW);
 
 
 class WatchHandler : public CmdHandler
@@ -195,26 +197,46 @@ float getError(float predicted)
     x1 = volt2dist(v1);
     x2 = volt2dist(v2);
     
-    float daa = abs(d + x1 - x2);
-    float dab = abs(d + x1 + x2);
-    float dba = abs(d - x1 - x2);
-    float dbb = abs(d - x1 + x2);
-    
+    // Calculate the 4 possible locations by averaging distances
     float aa = (x1 + x2) / 2.0f;
     float ab = (x1 - x2) / 2.0f;
     float ba = (x2 - x1) / 2.0f;
     float bb = (x1 + x2) / -2.0f;
     
+    // Calculate scores based on discrepancy between sensors
+    float daa = abs(d + x1 - x2);
+    float dab = abs(d + x1 + x2);
+    float dba = abs(d - x1 - x2);
+    float dbb = abs(d - x1 + x2);
+    
+    // Calculate scores based on deviation from predicted position
     float eaa = abs(abs(aa) - predicted);
     float eab = abs(abs(ab) - predicted);
     float eba = abs(abs(ba) - predicted);
     float ebb = abs(abs(bb) - predicted);
     
+    // Add both scores (no weighting yet)
     float taa = daa + eaa;
     float tab = dab + eab;
     float tba = dba + eba;
     float tbb = dbb + ebb;
     
+    // If not close to the line, weight heavily against swapping sides of the line
+    if (fabs(predicted) > d)
+    {
+        const float weight = 1000000.f;
+    
+        if (predicted > 0.f != aa > 0.f)
+            taa += weight;
+        if (predicted > 0.f != ab > 0.f)
+            tab += weight;
+        if (predicted > 0.f != ba > 0.f)
+            tba += weight;
+        if (predicted > 0.f != bb > 0.f)
+            tbb += weight;
+    }
+    
+    // Choose location with the lowest score
     float m = taa;
     float res = aa;
     
@@ -242,6 +264,10 @@ float volt2dist(float v)
 {
     float eout = (C1 - v) * C2;
     float vin = C3 * exp(-eout * C4);
+    
+    if (calSwitch.pressed() && vin > vinmax)
+        vinmax = vin;
+        
     float xsq = vinmax / vin - 1.f;
     return h * sqrt(xsq > 0.f ? xsq : 0.f);
 }
@@ -277,6 +303,10 @@ void setup()
     h = 8.f;
     d = 10.f;
     vinmax = 0.035f;
+    speed = 0.25f;
+    
+    calSwitch.init();
+    calSwitch.setPullup(true);
     
     steerLoop.setTuning(0.5f, 0.0f, 0.05f);
     steerLoop.setOutputLimits(-45.f, 45.f);
@@ -289,8 +319,12 @@ void setup()
 
 void loop()
 {
-    error = getError(error);
-    control = steerLoop.update(error);
+    calSwitch.update();
+    if (calSwitch.pressEdge())
+        vinmax = 0.f;
+        
+    error.push(getError(error));
+    control.push(steerLoop.update(error));
 
     // Use manual steering if a controller message is present
     if (RadioTerminal::rx_controller != 0)
@@ -310,7 +344,7 @@ void loop()
     
     // Calculate processor load information
     float currentLoadPercent = float(micros() - lastMicros) / loopPeriodUs;
-    loadPercent = currentLoadPercent;
+    loadPercent.push(currentLoadPercent);
     loadPercentF = loadPercent;
     errorF = error;
     if (loadMax < currentLoadPercent)

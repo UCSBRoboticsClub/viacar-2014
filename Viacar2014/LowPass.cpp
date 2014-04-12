@@ -30,7 +30,7 @@ void LowPass::setFilterConst(float fc)
 }
 
 
-LowPass& LowPass::operator=(float value)
+void LowPass::push(float value)
 {
     currentValue = fc * currentValue + (1.f - fc) * value;
 }

@@ -10,7 +10,7 @@ public:
     void setCutoffFreq(float freq, float dt);
     void setTimeConst(float tc, float dt);
     void setFilterConst(float fc);
-    LowPass& operator=(float value);
+    void push(float value);
 	operator float();
     void flush(float value = 0.f);
     
