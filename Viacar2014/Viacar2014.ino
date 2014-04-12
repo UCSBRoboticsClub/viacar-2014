@@ -22,8 +22,8 @@ Servo steering(3);
 
 float kp, ki, kd;
 float v1, v2, x1, x2;
-const float C1 = 0.546f;
-const float C2 = 8.16f;
+const float C1 = 0.631f;
+const float C2 = 6.8f;
 const float C3 = 0.00330f;
 const float C4 = 2.43f;
 float h, d, vinmax, errorF, loadPercentF, loadMax;
@@ -32,7 +32,7 @@ unsigned int loadMaxMillis;
 ControlLoop steerLoop(dt);
 LowPass error;
 LowPass control;
-float speed = 0.20f;
+float speed = 0.25f;
 float throttle;
 float turn;
 
@@ -240,7 +240,7 @@ float getError(float predicted)
 
 float volt2dist(float v)
 {
-    float eout = (v - C1) * C2;
+    float eout = (C1 - v) * C2;
     float vin = C3 * exp(-eout * C4);
     float xsq = vinmax / vin - 1.f;
     return h * sqrt(xsq > 0.f ? xsq : 0.f);
@@ -276,7 +276,7 @@ void setup()
     
     h = 8.f;
     d = 10.f;
-    vinmax = 1.f;
+    vinmax = 0.035f;
     
     steerLoop.setTuning(0.5f, 0.0f, 0.05f);
     steerLoop.setOutputLimits(-45.f, 45.f);
