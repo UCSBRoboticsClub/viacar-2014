@@ -5,8 +5,7 @@
 class Button
 {
 public:
-    Button(int pin, bool activeState = true);
-    void init();
+    Button(int pin, bool activeState = true, bool pullup = false);
     bool setPullup(bool on);
     void update();
     bool pressed();

@@ -11,9 +11,9 @@
 #include <cmath>
 
 
-unsigned int loopFreq = 1000;
-unsigned int loopPeriodUs = 1000000 / loopFreq;
-const float dt = loopPeriodUs / 1000000.f;
+const unsigned int loopFreq = 1000;
+const unsigned int loopPeriodUs = 1000000 / loopFreq;
+const float dt = 1.f / loopFreq;
 unsigned int lastMicros = 0;
 LowPass loadPercent;
 
@@ -36,7 +36,7 @@ float speed;
 float throttle;
 float turn;
 
-Button calSwitch(0, LOW);
+Button calSwitch(0, LOW, true);
 
 
 class WatchHandler : public CmdHandler
@@ -304,9 +304,6 @@ void setup()
     d = 10.f;
     vinmax = 0.035f;
     speed = 0.25f;
-    
-    calSwitch.init();
-    calSwitch.setPullup(true);
     
     steerLoop.setTuning(0.5f, 0.0f, 0.05f);
     steerLoop.setOutputLimits(-45.f, 45.f);

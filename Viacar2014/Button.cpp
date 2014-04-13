@@ -2,18 +2,13 @@
 #include "Button.h"
 
 
-Button::Button(int pin, bool activeState) :
+Button::Button(int pin, bool activeState, bool pullup) :
     pin(pin),
-    activeState(activeState)
+    activeState(activeState),
+    edge(false)
 {
-}
-
-
-void Button::init()
-{
-    pinMode(pin, INPUT);
+    pinMode(pin, pullup ? INPUT_PULLUP : INPUT);
     state = digitalRead(pin);
-    edge = false;
 }
 
 
