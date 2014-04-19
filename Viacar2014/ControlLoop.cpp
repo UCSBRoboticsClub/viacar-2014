@@ -58,6 +58,7 @@ float ControlLoop::update(float error, float feedForward)
     float ierrorTemp = ierror + error * dt;
     
     derror.push((error - lastError) / dt);
+    lastError = error;
     
     float control = feedForward + kp * error + ki * ierrorTemp + kd * derror;
     

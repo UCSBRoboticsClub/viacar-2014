@@ -197,6 +197,12 @@ float getError(float predicted)
     x1 = volt2dist(v1);
     x2 = volt2dist(v2);
     
+    const float maxDist = 30.f;
+    if (x1 > maxDist)
+        x1 = maxDist;
+    if (x2 > maxDist)
+        x2 = maxDist;
+    
     // Calculate the 4 possible locations by averaging distances
     float aa = (x1 + x2) / 2.0f;
     float ab = (x1 - x2) / 2.0f;
@@ -204,16 +210,16 @@ float getError(float predicted)
     float bb = (x1 + x2) / -2.0f;
     
     // Calculate scores based on discrepancy between sensors
-    float daa = abs(d + x1 - x2);
-    float dab = abs(d + x1 + x2);
-    float dba = abs(d - x1 - x2);
-    float dbb = abs(d - x1 + x2);
+    float daa = fabs(d + x1 - x2);
+    float dab = fabs(d + x1 + x2);
+    float dba = fabs(d - x1 - x2);
+    float dbb = fabs(d - x1 + x2);
     
     // Calculate scores based on deviation from predicted position
-    float eaa = abs(abs(aa) - predicted);
-    float eab = abs(abs(ab) - predicted);
-    float eba = abs(abs(ba) - predicted);
-    float ebb = abs(abs(bb) - predicted);
+    float eaa = fabs(abs(aa) - fabs(predicted));
+    float eab = fabs(abs(ab) - fabs(predicted));
+    float eba = fabs(abs(ba) - fabs(predicted));
+    float ebb = fabs(abs(bb) - fabs(predicted));
     
     // Add both scores (no weighting yet)
     float taa = daa + eaa;
@@ -222,7 +228,7 @@ float getError(float predicted)
     float tbb = dbb + ebb;
     
     // If not close to the line, weight heavily against swapping sides of the line
-    if (fabs(predicted) > d)
+    if (fabs(predicted) > d || x1 + x2 > d*2.f)
     {
         const float weight = 1000000.f;
     
@@ -296,17 +302,18 @@ void setup()
     analogReference(INTERNAL);
     analogReadAveraging(16);
     
-    steering.calibrate(1940, 1200, 60.f, -45.f);
+    steering.calibrate(1200, 1800, 60.f, -60.f);
     
     Serial.begin(115200);
     
     h = 8.f;
     d = 10.f;
-    vinmax = 0.035f;
-    speed = 0.25f;
+    vinmax = 0.045f;
+    speed = 0.3f;
     
-    steerLoop.setTuning(0.5f, 0.0f, 0.05f);
-    steerLoop.setOutputLimits(-45.f, 45.f);
+    steerLoop.setTuning(40.f, 0.0f, 6.f);
+    steerLoop.setOutputLimits(-50.f, 50.f);
+    steerLoop.setDerivCutoffFreq(50.f);
     
     error.setCutoffFreq(50.f, dt);
     control.setCutoffFreq(1.f, dt);
