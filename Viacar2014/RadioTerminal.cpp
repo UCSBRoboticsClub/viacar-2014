@@ -276,7 +276,7 @@ namespace RadioTerminal
             case STATUS_RN_P_NO_P0:
                 rx_controller = data;
                 clearTimer.end();
-                clearTimer.begin(clearFun, 0.5f);
+                clearTimer.begin(clearFun, 500000);
                 break;
                 
             case STATUS_RN_P_NO_P1:
