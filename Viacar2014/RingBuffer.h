@@ -11,29 +11,29 @@ public:
         headIndex = 0;
         size_ = 0;
     }
-    volatile T& operator[](int index) volatile;
-    T read(int index) const volatile;
-    void write(T value, int index) volatile;
-    void push(T value) volatile;
-    T pop() volatile;
-    int size() const volatile
+    T& operator[](int index);
+    T read(int index) const;
+    void write(T value, int index);
+    void push(T value);
+    T pop();
+    int size() const
     {
         return size_;
     }
-    int capacity() const volatile
+    int capacity() const
     {
         return Capacity;
+    } 
+    void clear()
+    {
+        size_ = 0;
     }
-        void clear() volatile
-        {
-                size_ = 0;
-        }
 
 private:
     T data[Capacity];
     int headIndex;
     int size_;
-    inline int getRealIndex(int index) const volatile
+    inline int getRealIndex(int index) const
     {
         return ((headIndex - index) % Capacity + Capacity) % Capacity;
     }
@@ -45,7 +45,7 @@ private:
  * Returns the object stored at a given index.
  */
 template <typename T, int Capacity>
-inline T RingBuffer<T, Capacity>::read(int index) const volatile
+inline T RingBuffer<T, Capacity>::read(int index) const
 {
     return data[getRealIndex(index)];
 }
@@ -56,7 +56,7 @@ inline T RingBuffer<T, Capacity>::read(int index) const volatile
  * Returns a reference to the object stored at a given index.
  */
 template <typename T, int Capacity>
-inline volatile T& RingBuffer<T, Capacity>::operator[](int index) volatile
+inline T& RingBuffer<T, Capacity>::operator[](int index)
 {
     return data[getRealIndex(index)];
 }
@@ -67,7 +67,7 @@ inline volatile T& RingBuffer<T, Capacity>::operator[](int index) volatile
  * Sets the value of the object stored at the given index.
  */
 template <typename T, int Capacity>
-inline void RingBuffer<T, Capacity>::write(T value, int index) volatile
+inline void RingBuffer<T, Capacity>::write(T value, int index)
 {
     data[getRealIndex(index)] = value;
 }
@@ -80,7 +80,7 @@ inline void RingBuffer<T, Capacity>::write(T value, int index) volatile
  * Overwrites the oldest value when size == capacity.
  */
 template <typename T, int Capacity>
-inline void RingBuffer<T, Capacity>::push(T value) volatile
+inline void RingBuffer<T, Capacity>::push(T value)
 {
     ++headIndex %= Capacity;
     data[headIndex] = value;
@@ -96,7 +96,7 @@ inline void RingBuffer<T, Capacity>::push(T value) volatile
  * Calling pop() when size == 0 results in undefined behavior.
  */
 template <typename T, int Capacity>
-inline T RingBuffer<T, Capacity>::pop() volatile
+inline T RingBuffer<T, Capacity>::pop()
 {
     int oldHead = headIndex;
     headIndex = (headIndex - 1 + Capacity) % Capacity;

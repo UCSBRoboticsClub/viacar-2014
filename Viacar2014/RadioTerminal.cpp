@@ -283,7 +283,8 @@ namespace RadioTerminal
                 // Break data message into four chars and send to terminal, stop if a null terminator is found
                 for (int i = 0; i < 4; ++i)
                 {
-                    if ( ((data>>(8*i)) & 0xff) == '\0') break;
+                    if ( ((data>>(8*i)) & 0xff) == '\0')
+                        break;
                     receiveChar( (char)((data>>(8*i)) & 0xff) );
                     //Serial.println((char)((data>>(8*i)) & 0xff));
                 }
@@ -399,12 +400,25 @@ namespace RadioTerminal
         const int maxsize = 256;
         int i = 0;
         
-        // Send string across radio link 1 character at a time
+        // Send string across radio link, grouping characters into batches
         while (i < maxsize)
         {
-            if (string[i] == '\0') break;
+            uint32_t data = 0;
+            int j = 0;
+            
+            while (j < 4)
+            {
+                if (string[i + j] == '\0' || i + j >= maxsize)
+                    break;
+                data |= uint32_t(string[i + j]) << 8 * j;
+                ++j;
+            }
+            
+            i += j;
+            transmit(data);
+            if (string[i] == '\0')
+                break;
             delayMicroseconds(20);
-            transmit(string[i++]);
         }
     }
 }

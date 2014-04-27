@@ -5,6 +5,7 @@
 #include "./ControlLoop.h"
 #include "./LowPass.h"
 #include "./Button.h"
+#include "./RingBuffer.h"
 #include <IntervalTimer.h>
 #include <SPI.h>
 #include <cstdio>
@@ -20,7 +21,6 @@ LowPass loadPercent;
 Motor motor(7, 6, 5);
 Servo steering(3);
 
-float kp, ki, kd;
 float v1, v2, x1, x2;
 const float C1 = 0.631f;
 const float C2 = 6.8f;
@@ -37,6 +37,15 @@ float throttle;
 float turn;
 
 Button calSwitch(0, LOW, true);
+
+struct DataPoint
+{
+    float error;
+    float control;
+};
+
+RingBuffer<DataPoint, 1000> dataLog;
+unsigned int cycleCount = 0;
 
 
 class WatchHandler : public CmdHandler
@@ -189,6 +198,45 @@ CmdHandler* setspeed(const char* input)
 }
 
 
+CmdHandler* dumplogm(const char* input)
+{
+    char buffer[256];
+    
+    RadioTerminal::write("[");
+    
+    for (int i = dataLog.size(); i > 0; --i)
+    {
+        snprintf(buffer, 256, "%e,%e;\n",
+                 dataLog[i].error,
+                 dataLog[i].control);
+        RadioTerminal::write(buffer); 
+    }
+    
+    snprintf(buffer, 256, "%e,%e];",
+             dataLog[0].error,
+             dataLog[0].control);
+    RadioTerminal::write(buffer); 
+    
+    return NULL;
+}
+
+
+CmdHandler* dumplog(const char* input)
+{
+    char buffer[256];
+    
+    for (int i = dataLog.size(); i >= 0; --i)
+    {
+        snprintf(buffer, 256, "%e,%e\n",
+                 dataLog[i].error,
+                 dataLog[i].control);
+        RadioTerminal::write(buffer); 
+    }
+    
+    return NULL;
+}
+
+
 float getError(float predicted)
 {
     v1 = analogRead(A0)/4096.f;
@@ -297,6 +345,8 @@ void setup()
     RadioTerminal::addCommand("d", &setd);
     RadioTerminal::addCommand("speed", &setspeed);
     RadioTerminal::addCommand("w", &watch);
+    RadioTerminal::addCommand("logm", &dumplogm);
+    RadioTerminal::addCommand("log", &dumplog);
     
     analogReadRes(12);
     analogReference(INTERNAL);
@@ -311,7 +361,7 @@ void setup()
     vinmax = 0.045f;
     speed = 0.3f;
     
-    steerLoop.setTuning(40.f, 0.0f, 6.f);
+    steerLoop.setTuning(30.f, 0.0f, 20.f);
     steerLoop.setOutputLimits(-50.f, 50.f);
     steerLoop.setDerivCutoffFreq(50.f);
     
@@ -346,6 +396,10 @@ void loop()
     steering = turn;
     motor = throttle;
     
+    // Store log data
+    if (cycleCount % (loopFreq / 10) == 0)
+        dataLog.push({float(error), float(control)});
+    
     // Calculate processor load information
     float currentLoadPercent = float(micros() - lastMicros) / loopPeriodUs;
     loadPercent.push(currentLoadPercent);
@@ -358,6 +412,8 @@ void loop()
     }
     if (loadMaxMillis + 1000 < millis())
         loadMax = currentLoadPercent;
+        
+    ++cycleCount;
         
     // Limit loop speed to a consistent value to make timing and integration simpler
     while (micros() - lastMicros < loopPeriodUs);
