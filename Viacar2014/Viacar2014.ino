@@ -384,7 +384,7 @@ void loop()
     if (RadioTerminal::rx_controller != 0)
     {
         turn = 60.f * 0.0078125f * deadzone((int8_t)((RadioTerminal::rx_controller>>16)&0xff), 8); // Convert to +/-1.0f range
-        throttle = 0.5f * -0.0078125f * deadzone((int8_t)((RadioTerminal::rx_controller>>8)&0xff), 8);
+        throttle = 0.7f * -0.0078125f * deadzone((int8_t)((RadioTerminal::rx_controller>>8)&0xff), 8);
     }
     else
     {
